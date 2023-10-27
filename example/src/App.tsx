@@ -160,15 +160,11 @@ function setAdditionalValues()
   TCDevice.getInstance().addAdditionalPropertyWithNumberValue("additional_num", 31.03)
   TCDevice.getInstance().addAdditionalPropertyWithNumberValue("additional_int", 31)
   TCDevice.getInstance().addAdditionalPropertyWithBooleanValue("additional_bool", true)
-  TCDevice.getInstance().addAdditionalPropertyWithArrayValue("additional_list_int",[21,31,41])
-  TCDevice.getInstance().addAdditionalPropertyWithArrayValue("additional_list_string",["STRING_VAL_1","STRING_VAL_2"])
 
   TCApp.getInstance().addAdditionalProperty("additional_string", "additional_val_string")
   TCApp.getInstance().addAdditionalPropertyWithNumberValue("additional_num", 31.03)
   TCApp.getInstance().addAdditionalPropertyWithNumberValue("additional_int", 31)
   TCApp.getInstance().addAdditionalPropertyWithBooleanValue("additional_bool", true)
-  TCApp.getInstance().addAdditionalPropertyWithArrayValue("additional_list_int",[21,31,41])
-  TCApp.getInstance().addAdditionalPropertyWithArrayValue("additional_list_string",["STRING_VAL_1","STRING_VAL_2"])
 
   let map = { shape: "Shape", xPos: "number" , age: 121}
 

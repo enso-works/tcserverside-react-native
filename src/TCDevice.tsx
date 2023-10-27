@@ -185,12 +185,6 @@ export class TCDevice
         this.additionalProperties.set(key, value);
         TCServerSideBridge.addAdditionalPropertyWithNumberValue(key, value, TCDevice.name);
     }
-
-    addAdditionalPropertyWithArrayValue(key: string, value: Array<any>)
-    {
-        this.additionalProperties.set(key, value);
-        TCServerSideBridge.addAdditionalPropertyWithArrayValue(key, value, TCDevice.name);
-    }
   
     getAdditionalProperties(): Map<string, any>
     {

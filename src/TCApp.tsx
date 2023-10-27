@@ -129,12 +129,6 @@ export class TCApp
         this.additionalProperties.set(key, value);
         TCServerSideBridge.addAdditionalPropertyWithNumberValue(key, value, TCApp.name);
     }
-
-    addAdditionalPropertyWithArrayValue(key: string, value: Array<any>)
-    {
-        this.additionalProperties.set(key, value);
-        TCServerSideBridge.addAdditionalPropertyWithArrayValue(key, value, TCApp.name);
-    }
   
     getAdditionalProperties(): Map<string, any>
     {

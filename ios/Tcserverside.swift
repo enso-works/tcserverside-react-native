@@ -111,19 +111,6 @@ class Tcserverside: NSObject {
         }
     }
     
-    @objc(addAdditionalPropertyWithArrayValue:value:className:)
-    func addAdditionalPropertyWithArrayValue(key: String, value: Array<Any>, className: String)
-    {
-        if (className == "TCDevice")
-        {
-            TCDevice.sharedInstance().addAdditionalProperty(key, withArrayValue: value)
-        }
-        else if (className == "TCApp")
-        {
-            TCApp.sharedInstance().addAdditionalProperty(key, withArrayValue: value)
-        }
-    }
-    
     @objc(addAdditionalPropertyWithMapValue:value:className:)
     func addAdditionalPropertyWithMapValue(key: String, value: Dictionary<String, Any>, className: String)
     {

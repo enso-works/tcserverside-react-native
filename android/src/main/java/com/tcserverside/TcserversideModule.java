@@ -294,29 +294,6 @@ public class TcserversideModule extends ReactContextBaseJavaModule
   }
 
   @ReactMethod
-  public void addAdditionalPropertyWithArrayValue(String key, ReadableArray value, String className)
-  {
-    TCAdditionalProperties obj = null;
-    if (value != null)
-    {
-      switch (className)
-      {
-        case "TCDevice":
-          obj = TCDevice.getInstance();
-          break;
-        case "TCApp":
-          obj = TCApp.getInstance();
-          break;
-      }
-
-      if (obj != null)
-      {
-        obj.addAdditionalProperty(key, value.toArrayList());
-      }
-    }
-  }
-
-  @ReactMethod
   public void addAdditionalPropertyWithMapValue(String key, ReadableMap value, String className)
   {
     TCAdditionalProperties obj = null;

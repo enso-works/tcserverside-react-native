@@ -15,7 +15,6 @@ RCT_EXTERN_METHOD(getPermanentData: (NSString *) key callback: (RCTResponseSende
 RCT_EXTERN_METHOD(addPermanentData: (NSString *) key value: (RCTResponseSenderBlock) value)
 RCT_EXTERN_METHOD(enableRunningInBackground)
 RCT_EXTERN_METHOD(addAdditionalProperty: (NSString *) key value: (NSString*) value className: (NSString*) className)
-RCT_EXTERN_METHOD(addAdditionalPropertyWithArrayValue: (NSString *) key value: (NSArray*) value className: (NSString*) className)
 RCT_EXTERN_METHOD(addAdditionalPropertyWithMapValue: (NSString *) key value: (NSDictionary*) value className: (NSString*) className)
 RCT_EXTERN_METHOD(addAdditionalPropertyWithBooleanValue: (NSString *) key value: (BOOL) value className: (NSString*) className)
 RCT_EXTERN_METHOD(addAdditionalPropertyWithNumberValue: (NSString *) key value: (double) value className: (NSString*) className)
