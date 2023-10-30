@@ -195,9 +195,10 @@
     
     if (![items isEqual: [NSNull null]])
     {
-        for (NSMutableDictionary *itemDict in items)
+        for (NSMutableDictionary *itemElem in items)
         {
             TCItem *tc_item = [[TCItem alloc] init];
+            NSMutableDictionary *itemDict = [itemElem mutableCopy];
             [self setProduct: itemDict forTCItem: tc_item];
 
             for (NSString *key in itemDict.allKeys)

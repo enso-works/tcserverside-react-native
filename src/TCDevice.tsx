@@ -2,7 +2,6 @@ import { TCServerSideBridge } from "./TCServerSide";
 
 export class TCDevice
 {
-    private static instance: TCDevice;
     private additionalProperties = new Map();
 
     private _sdkID: string;
@@ -16,17 +15,7 @@ export class TCDevice
     private _screenWidth: number;
     private _screenHeight: number;
     
-    private constructor() { }
-
-    public static getInstance(): TCDevice 
-    {
-        if (!TCDevice.instance) 
-        {
-            TCDevice.instance = new TCDevice();
-        }
-
-        return TCDevice.instance;
-    }
+    constructor() { }
 
     public set sdkID(mID: string) {
         if (this._sdkID !== mID) {

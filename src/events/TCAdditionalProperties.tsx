@@ -1,44 +1,44 @@
 export abstract class TCAdditionalProperties
 {
-  private additionalProperties = new Map();
+  private additionalProperties: { [key: string]: any } = {};
 
   addAdditionalProperty(key: string, value: string)
   {
-      this.additionalProperties.set(key, value);
+    this.additionalProperties[key] = value;
   }
 
   addAdditionalPropertyWithMapValue(key: string, value: Object)
   {
-      this.additionalProperties.set(key, value);
+    this.additionalProperties[key] = value;
   }
 
   addAdditionalPropertyWithBooleanValue(key: string, value: boolean)
   {
-      this.additionalProperties.set(key, value);
+    this.additionalProperties[key] = value;
   }
 
   addAdditionalPropertyWithNumberValue(key: string, value: number)
   {
-      this.additionalProperties.set(key, value);
+    this.additionalProperties[key] = value;
   }
 
   addAdditionalPropertyWithArrayValue(key: string, value: Array<any>)
   {
-      this.additionalProperties.set(key, value);
+    this.additionalProperties[key] = value;
   }
 
-  getAdditionalProperties(): Map<string, any>
+  getAdditionalProperties(): { [key: string]: any }
   {
     return this.additionalProperties;
   }
 
   removeAdditionalProperty(key: string)
   {
-      this.additionalProperties.delete(key);
+    delete this.additionalProperties[key];
   }
 
   clearAdditionalProperties()
   {
-      this.additionalProperties.clear();
+    this.additionalProperties = {};
   }
 }

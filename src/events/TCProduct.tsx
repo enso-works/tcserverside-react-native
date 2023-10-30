@@ -4,7 +4,7 @@ export class TCProduct extends TCAdditionalProperties
 {
   ID?: string;
   name?: string;
-  price?: string;
+  price?: number;
   currency?: string;
   categories?: Array<string>;
   brand?: string;

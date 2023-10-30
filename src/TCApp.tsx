@@ -2,7 +2,6 @@ import { TCServerSideBridge } from "./TCServerSide";
 
 export class TCApp
 {
-    private static instance: TCApp;
     private additionalProperties = new Map();
 
     private _name: string;
@@ -12,17 +11,7 @@ export class TCApp
     private _coreVersion: string;
     private _serverSideVersion: string;
 
-    private constructor() {}
-
-    public static getInstance(): TCApp 
-    {
-        if (!TCApp.instance) 
-        {
-            TCApp.instance = new TCApp();
-        }
-
-        return TCApp.instance;
-    }
+    constructor() {}
     
     public set name(theName: string) {
         if (this._name !== theName) {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import * as TCServerSide from 'tcserverside-react-native';
 import { TCApp, TCDevice, TCBeginCheckoutEvent } from 'tcserverside-react-native';
-import { TCUser } from 'tccore-react-native';
+import  {TCUserInstance} from 'tccore-react-native';
 
 async function initialiseServerSide()
 {
@@ -90,40 +90,17 @@ const ButtonRow = () => {
 
 function editTCUser()
 {
-  TCUser.getInstance().anonymous_id = "test_anonymous_value25" 
-  TCUser.getInstance().email_md5 = "email>33"
+  TCUserInstance.anonymous_id = "test_anonymous_value25" 
+  TCUserInstance.email_md5 = "email>33"
 }
 
 function printValues()
 {
   
-  console.log("TCAPP values")
-
-  console.log(TCApp.getInstance().name)
-  console.log(TCApp.getInstance().version)
-  console.log(TCApp.getInstance().build)
-  console.log(TCApp.getInstance().nameSpace)
-  console.log(TCApp.getInstance().coreVersion)
-  console.log(TCApp.getInstance().serverSideVersion)
-
-
-  console.log("TCDevice values")
-
-  console.log(TCDevice.getInstance().sdkID)
-  console.log(TCDevice.getInstance().manufacturer)
-  console.log(TCDevice.getInstance().model)
-  console.log(TCDevice.getInstance().name)
-  console.log(TCDevice.getInstance().type)
-  console.log(TCDevice.getInstance().timezone)
-  console.log(TCDevice.getInstance().osName)
-  console.log(TCDevice.getInstance().osVersion)
-  console.log(TCDevice.getInstance().screenWidth)
-  console.log(TCDevice.getInstance().screenHeight)
-
   console.log("TCUser values")
 
-  console.log(TCUser.getInstance().consentID)
-  console.log(TCUser.getInstance().anonymous_id)
+  console.log(TCUserInstance.consentID)
+  console.log(TCUserInstance.anonymous_id)
 
 }
 

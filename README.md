@@ -4,28 +4,42 @@
 
 ## Installation
 
+add the following dependencies into your package.json 
+
 ```sh
-npm install tcserverside
+    "tcserverside-react-native": "git+https://github.com/commandersact/tcserverside-react-native#1.1.0", #check latest available version
+    "tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#1.1.0", #check latest available version
 ```
 
 ## Usage
 
+This bridge ports the TCServerSide SDK available on [Android](https://github.com/CommandersAct/androidV5/tree/master/TCServerSide) and [iOS](https://github.com/CommandersAct/iOSV5/tree/master/TCServerSide)
+
+It is highly recommanded to take a look on the native SDK documentation for more insights and details. 
+
+main usage is sending event to your commandersAct platform. 
+
+example : 
+
+
 ```js
-import { multiply } from 'tcserverside';
+// imports : ...
 
-// ...
+import * as TCServerSide from 'tcserverside-react-native';
+import {TCBeginCheckoutEvent} from 'tcserverside-react-native';
 
-const result = await multiply(3, 7);
+// initialisation ... (Mandatory !)
+	TCServerSide.initServerSide(3311, 'a_source_key')
+
+// creating event : 
+
+	let event = new TCBeginCheckoutEvent();
+  	event.currency = "USD"
+  	event.value = 12
+
+// executing event :
+  	TCServerSide.execute(event)
+
 ```
 
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## License
-
-MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Please check our [TDemoReactNative](https://github.com/CommandersAct/TCDemoReactNative) for a full demo app

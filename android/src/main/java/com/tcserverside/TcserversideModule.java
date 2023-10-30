@@ -427,7 +427,7 @@ public class TcserversideModule extends ReactContextBaseJavaModule
       case "purchase":
         event = gson.fromJson(eventString, TCPurchaseEvent.class);
         break;
-      case "add_payement_info":
+      case "add_payment_info":
         event = gson.fromJson(eventString, TCAddPaymentInfoEvent.class);
         break;
       case "add_to_cart":
