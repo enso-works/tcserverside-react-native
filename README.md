@@ -17,7 +17,10 @@ This bridge ports the TCServerSide SDK available on [Android](https://github.com
 
 It is highly recommanded to take a look on the native SDK documentation for more insights and details. 
 
+### Please check our [TDemoReactNative](https://github.com/CommandersAct/TCDemoReactNative) for a full demo app
+
 main usage is sending event to your commandersAct platform. 
+
 
 example : 
 
@@ -42,4 +45,17 @@ import {TCBeginCheckoutEvent} from 'tcserverside-react-native';
 
 ```
 
-Please check our [TDemoReactNative](https://github.com/CommandersAct/TCDemoReactNative) for a full demo app
+If you wanna access other [event's payload](https://community.commandersact.com/platform-x/developers/tracking/about-events/mobile-sdk-event-specificity#event-specificity-for-mobile-app) schemes: 
+
+```js
+import {TCAppInstance, TCDeviceInstance} from 'tcserverside-react-native';
+
+// you can directly read SDK intialised values : 
+  console.log(TCDeviceInstance.sdkID)
+  console.log(TCAppInstance.nameSpace)
+
+or overwrite : 
+
+  console.log(TCDeviceInstance.sdkID = "my_custom_sdk_id"
+  TCAppInstance.nameSpace = "my_custom_namespace"
+```
