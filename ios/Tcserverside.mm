@@ -20,6 +20,8 @@ RCT_EXTERN_METHOD(addAdditionalPropertyWithBooleanValue: (NSString *) key value:
 RCT_EXTERN_METHOD(addAdditionalPropertyWithNumberValue: (NSString *) key value: (double) value className: (NSString*) className)
 RCT_EXTERN_METHOD(removeAdditionalProperty: (NSString *) key className: (NSString*) className)
 RCT_EXTERN_METHOD(execute: (NSString *) eventName eventJson: (NSString*) eventStringJson)
+RCT_EXTERN_METHOD(useLegacyUniqueIDForAnonymousID: (RCTResponseSenderBlock) callback)
+RCT_EXTERN_METHOD(useLegacyUniqueIDForConsentID: (RCTResponseSenderBlock) callback)
 
 + (BOOL)requiresMainQueueSetup
 {

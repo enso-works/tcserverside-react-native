@@ -185,6 +185,20 @@ class Tcserverside: NSObject {
         }
     }
 
+    @objc(useLegacyUniqueIDForConsentID:)
+    func useLegacyUniqueIDForConsentID(callback: RCTResponseSenderBlock)
+    {
+        TCPredefinedVariables.sharedInstance().useLegacyUniqueIDForConsentID()
+        callback([TCUser.sharedInstance().consentID!])
+    }
+    
+    @objc(useLegacyUniqueIDForAnonymousID:)
+    func useLegacyUniqueIDForAnonymousID(callback: RCTResponseSenderBlock)
+    {
+        TCPredefinedVariables.sharedInstance().useLegacyUniqueIDForAnonymousID()
+        callback([TCUser.sharedInstance().anonymous_id!])
+    }
+    
     func evaluateBehaviour(stringBehaviour: String) -> ETCConsentBehaviour
     {
         if (stringBehaviour == "PB_ALWAYS_ENABLED")

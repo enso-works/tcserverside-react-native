@@ -59,6 +59,19 @@ const ButtonRow = () => {
       onPress={TCServerSide.disableServerSide}>
       <Text style={styles.buttonText}>Disable ServerSide</Text>
     </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.button}
+      onPress={TCServerSide.useLegacyUniqueIDForAnonymousID}>
+      <Text style={styles.buttonText}>useLegacyUniqueIDForAnonymousID</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.button}
+      onPress={TCServerSide.useLegacyUniqueIDForConsentID}>
+      <Text style={styles.buttonText}>useLegacyUniqueIDForConsentID</Text>
+    </TouchableOpacity>
+
     <TouchableOpacity
       style={styles.button}
       onPress={TCServerSide.enableServerSide}>

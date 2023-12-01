@@ -71,6 +71,16 @@ export function enableRunningInBackground()
     TCServerSideBridge.enableRunningInBackground();
 }
 
+export function useLegacyUniqueIDForAnonymousID()
+{
+    TCServerSideBridge.useLegacyUniqueIDForAnonymousID(setAnonymousID);
+}
+
+export function useLegacyUniqueIDForConsentID()
+{
+    TCServerSideBridge.useLegacyUniqueIDForConsentID(setConsentID);
+}
+
 export enum ETCConsentBehaviour
 {
   PB_DEFAULT_BEHAVIOUR = 'PB_DEFAULT_BEHAVIOUR',
@@ -92,4 +102,18 @@ function onInitializedAndroid(schemes: string)
     TCAppInstance.initValues(JSON.parse(map["app"]))
     TCDeviceInstance.initValues(JSON.parse(map["device"]))
     TCUserInstance.initValues(JSON.parse(map["user"]))
+}
+
+function setConsentID(consentID: string)
+{
+    TCUserInstance.consentID = consentID
+
+    console.log("consentID = " + consentID)
+}
+
+function setAnonymousID(anonymous_id: string)
+{
+    TCUserInstance.anonymous_id = anonymous_id
+
+    console.log("anonymousid = " + anonymous_id)
 }

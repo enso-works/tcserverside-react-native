@@ -17,6 +17,7 @@ import com.tagcommander.lib.core.TCDebug;
 import com.tagcommander.lib.core.TCLogger;
 import com.tagcommander.lib.core.TCUser;
 import com.tagcommander.lib.serverside.ETCConsentBehaviour;
+import com.tagcommander.lib.serverside.TCPredefinedVariables;
 import com.tagcommander.lib.serverside.TCServerSide;
 import com.tagcommander.lib.serverside.events.TCAddPaymentInfoEvent;
 import com.tagcommander.lib.serverside.events.TCAddShippingInfoEvent;
@@ -396,6 +397,20 @@ public class TcserversideModule extends ReactContextBaseJavaModule
     {
       tcServerSide.enableServerSide();
     }
+  }
+
+  @ReactMethod
+  public void useLegacyUniqueIDForAnonymousID(Callback callBack)
+  {
+    TCPredefinedVariables.getInstance().useLegacyUniqueIDForAnonymousID();
+    callBack.invoke(TCUser.getInstance().anonymous_id);
+  }
+
+  @ReactMethod
+  public void useLegacyUniqueIDForConsentID(Callback callBack)
+  {
+    TCPredefinedVariables.getInstance().useLegacyUniqueIDForConsentID();
+    callBack.invoke(TCUser.getInstance().consentID);
   }
 
   private ETCConsentBehaviour evaluateBehaviour(String defaultBehavior)
