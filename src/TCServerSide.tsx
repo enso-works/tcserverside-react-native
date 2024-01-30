@@ -1,6 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
 import {TCEvent} from './events/TCEvent'
-import {TCUserInstance} from 'tccore-react-native'; 
+import {TCUserInstance} from '@commandersact/tccore-react-native'; 
 import { TCDevice } from './TCDevice';
 import { TCApp } from './TCApp';
 export const TCDeviceInstance = new TCDevice();
