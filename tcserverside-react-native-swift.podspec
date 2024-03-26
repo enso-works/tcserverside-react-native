@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.dependency 'tcserverside-react-native'
-  s.dependency 'IOSV5-TCCore', '5.3.1'
-  s.dependency 'TCServerSide_noIDFA', '5.4.1'
+  s.dependency 'IOSV5-TCCore', '5.3.4'
+  s.dependency 'TCServerSide_noIDFA', '5.4.3'
 
 end
 
