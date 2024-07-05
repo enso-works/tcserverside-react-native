@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
-import * as TCServerSide from 'tcserverside-react-native';
-import { TCApp, TCDevice, TCBeginCheckoutEvent } from 'tcserverside-react-native';
-import  {TCUserInstance} from 'tccore-react-native';
+import * as TCServerSide from '@commandersact/tcserverside-react-native';
+import { TCApp, TCDevice, TCBeginCheckoutEvent } from '@commandersact/tcserverside-react-native';
+import  {TCUserInstance} from '@commandersact/tccore-react-native';
 
 async function initialiseServerSide()
 {

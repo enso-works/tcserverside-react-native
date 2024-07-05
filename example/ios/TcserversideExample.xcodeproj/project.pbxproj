@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2972DA632A2226D97538AADF /* Pods_TcserversideExample_TcserversideExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F4B1DB0F5B4F0816B84B8 /* Pods_TcserversideExample_TcserversideExampleTests.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CC05BE4C7E3EB55C0F388BB4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */; };
 		EB0FFEFE2AA63E1C006D7CD7 /* Pods_TcserversideExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA85D2D6B74A50FA83EB87D /* Pods_TcserversideExample.framework */; };
 		EB0FFEFF2AA63E1C006D7CD7 /* Pods_TcserversideExample.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BBA85D2D6B74A50FA83EB87D /* Pods_TcserversideExample.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		3B4392A12AC88292D35C810B /* Pods-TcserversideExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample.debug.xcconfig"; path = "Target Support Files/Pods-TcserversideExample/Pods-TcserversideExample.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-TcserversideExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample.release.xcconfig"; path = "Target Support Files/Pods-TcserversideExample/Pods-TcserversideExample.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-TcserversideExample-TcserversideExampleTests/Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TcserversideExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7D2F4B1DB0F5B4F0816B84B8 /* Pods_TcserversideExample_TcserversideExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TcserversideExample_TcserversideExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TcserversideExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-TcserversideExample-TcserversideExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample-TcserversideExampleTests.release.xcconfig"; path = "Target Support Files/Pods-TcserversideExample-TcserversideExampleTests/Pods-TcserversideExample-TcserversideExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */,
 			);
 			name = TcserversideExample;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CC05BE4C7E3EB55C0F388BB4 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,11 +628,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -706,11 +706,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

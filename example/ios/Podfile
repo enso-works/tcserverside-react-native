@@ -25,8 +25,8 @@ target 'TcserversideExample' do
     end
   end
 
-  pod "tcserverside-react-native-swift", :path => '../node_modules/tcserverside-react-native/tcserverside-react-native-swift.podspec'
-  pod "tccore-react-native-swift", :path => '../node_modules/tccore-react-native/tccore-react-native-swift.podspec'
+  pod "tcserverside-react-native-swift", :path => '../node_modules/@commandersact/tcserverside-react-native/tcserverside-react-native-swift.podspec'
+  pod "tccore-react-native-swift", :path => '../node_modules/@commandersact/tccore-react-native/tccore-react-native-swift.podspec'
 
   use_react_native!(
     :path => config[:reactNativePath],

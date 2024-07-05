@@ -7,8 +7,8 @@
 add the following dependencies into your package.json 
 
 ```sh
-    "tcserverside-react-native": "git+https://github.com/commandersact/tcserverside-react-native#1.1.0", #check latest available version
-    "tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#1.1.0", #check latest available version
+    "@commandersact/tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#*.*.*", #check latest available version
+    "@commandersact/tcserverside-react-native": "git+https://github.com/commandersact/tcserverside-react-native#*.*.*", #check latest available version
 ```
 
 ## Usage
@@ -17,7 +17,9 @@ This bridge ports the TCServerSide SDK available on [Android](https://github.com
 
 It is highly recommanded to take a look on the native SDK documentation for more insights and details. 
 
-### Please check our [TDemoReactNative](https://github.com/CommandersAct/TCDemoReactNative) for a full demo app
+### Demo App : 
+
+For a full demo app, please check our TDemoReactNative : https://github.com/CommandersAct/TCDemoReactNative 
 
 main usage is sending event to your commandersAct platform. 
 
