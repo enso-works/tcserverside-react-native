@@ -75,7 +75,7 @@ public class TcserversideModule extends ReactContextBaseJavaModule
     tcServerSide = new TCServerSide(siteId, sourceKey, getReactApplicationContext().getApplicationContext(), evaluateBehaviour(defaultBehaviour));
     TCApp.getInstance().addAdditionalProperty("bridge", "react-native");
     TCApp.getInstance().addAdditionalProperty("tccore_react_native_plugin_version", TCCoreReactNativeGenerated.version);
-    TCApp.getInstance().addAdditionalProperty("tcserverside_flutter_plugin_version", TCServerSideReactNativeGenerated.version);
+    TCApp.getInstance().addAdditionalProperty("tcserverside_react_native_plugin_version", TCServerSideReactNativeGenerated.version);
 
     callBack.invoke(parseSchemes());
   }
