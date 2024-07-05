@@ -14,6 +14,9 @@ class Tcserverside: NSObject {
         TCDebug.setDebugLevel(TCLogLevel_Info)
         eventParser = TCEventParser()
         tc = ServerSide(siteID: Int32(siteId), andSourceKey: sourceKey, andDefaultBehaviour: evaluateBehaviour(stringBehaviour: defaultBehaviour))
+        TCApp.sharedInstance().addAdditionalProperty("bridge", withStringValue: "react-native")
+        TCApp.sharedInstance().addAdditionalProperty("tcserverside_react_native_plugin_version", withStringValue: TCServerSideReactNativeGenerated.version)
+
         callback([parseSchemes()])
     }
     
