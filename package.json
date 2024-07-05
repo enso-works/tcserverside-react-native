@@ -1,6 +1,6 @@
 {
   "name": "@commandersact/tcserverside-react-native",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": " Commanders Act's ServerSide SDK bridge for react native",
   "main": "src/index",
   "module": "src/index",
@@ -78,7 +78,7 @@
     "release-it": "^15.0.0",
     "turbo": "^1.10.7",
     "typescript": "^5.0.2",
-    "@commandersact/tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#1.2.1"
+    "@commandersact/tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#1.2.3"
   },
   "dependencies": {
   },
@@ -88,7 +88,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "@commandersact/tccore-react-native": "1.2.1"
+    "@commandersact/tccore-react-native": "1.2.3"
   },
   "engines": {
     "node": ">= 16.0.0"
