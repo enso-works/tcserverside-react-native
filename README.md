@@ -61,3 +61,13 @@ or overwrite :
   console.log(TCDeviceInstance.sdkID = "my_custom_sdk_id"
   TCAppInstance.nameSpace = "my_custom_namespace"
 ```
+
+# Support & Contact : 
+
+Support : support@commandersact.com
+
+http://www.commandersact.com
+
+Commanders Act | 7b rue taylor - 75010 PARIS - France
+
+![Commanders Act logo](res/ca_logo.png)
