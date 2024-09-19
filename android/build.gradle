@@ -90,7 +90,7 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation 'com.tagcommander.lib:core:5.4.6'
-  implementation 'com.tagcommander.lib:ServerSide:5.5.6'
+  implementation 'com.tagcommander.lib:ServerSide:5.5.7'
   api 'com.google.code.gson:gson:2.10.1'
     implementation project(path: ':commandersact_tccore-react-native')
 }
