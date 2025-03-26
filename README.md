@@ -30,8 +30,8 @@ example :
 ```js
 // imports : ...
 
-import * as TCServerSide from 'tcserverside-react-native';
-import {TCBeginCheckoutEvent} from 'tcserverside-react-native';
+import * as TCServerSide from '@commandersact/tcserverside-react-native';
+import {TCBeginCheckoutEvent} from '@commandersact/tcserverside-react-native';
 
 // initialisation ... (Mandatory !)
 	TCServerSide.initServerSide(3311, 'a_source_key')
@@ -50,7 +50,7 @@ import {TCBeginCheckoutEvent} from 'tcserverside-react-native';
 If you wanna access other [event's payload](https://community.commandersact.com/platform-x/developers/tracking/about-events/mobile-sdk-event-specificity#event-specificity-for-mobile-app) schemes: 
 
 ```js
-import {TCAppInstance, TCDeviceInstance} from 'tcserverside-react-native';
+import {TCAppInstance, TCDeviceInstance} from '@commandersact/tcserverside-react-native';
 
 // you can directly read SDK intialised values : 
   console.log(TCDeviceInstance.sdkID)
