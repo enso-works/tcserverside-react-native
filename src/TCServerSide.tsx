@@ -6,23 +6,7 @@ import { TCApp } from './TCApp';
 export const TCDeviceInstance = new TCDevice();
 export const TCAppInstance = new TCApp();
 
-
-const LINKING_ERROR =
-  `The package 'tcserverside' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
-
 export const TCServerSideBridge = NativeModules.Tcserverside
-  ? NativeModules.Tcserverside
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
 
 export async function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR)
 {
