@@ -6,8 +6,8 @@ export class TCAddToCartEvent extends TCECommerceEvent {
 
   constructor(items?: Array<TCItem>, value?: number, currency?: string) {
     super();
-    super.name = 'add_to_cart';
-    super.currency = currency;
+    this.name = 'add_to_cart';
+    this.currency = currency;
     this.value = value;
     this.items = items ? items : new Array<TCItem>();
   }

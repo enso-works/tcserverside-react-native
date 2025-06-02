@@ -30,8 +30,8 @@ export class TCPurchaseEvent extends TCECommerceEvent {
     this.type = type;
     this.paymentMethod = paymentMethod;
     this.status = status;
-    super.name = 'purchase';
-    super.currency = currency;
+    this.name = 'purchase';
+    this.currency = currency;
     this.items = items ? items : new Array<TCItem>();
   }
 }

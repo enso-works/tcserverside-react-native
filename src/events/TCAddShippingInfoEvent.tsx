@@ -8,8 +8,8 @@ export class TCAddShippingInfoEvent extends TCECommerceEvent {
 
   constructor(value?: number, currency?: string, items?: Array<TCItem>) {
     super();
-    super.name = 'add_shipping_info';
-    super.currency = currency;
+    this.name = 'add_shipping_info';
+    this.currency = currency;
     this.value = value;
     this.items = items ? items : new Array<TCItem>();
   }

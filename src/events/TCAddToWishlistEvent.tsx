@@ -6,7 +6,7 @@ export class TCAddToWishlistEvent extends TCECommerceEvent {
 
   constructor(items?: Array<TCItem>) {
     super();
-    super.name = 'add_to_wishlist';
+    this.name = 'add_to_wishlist';
     this.items = items ? items : new Array<TCItem>();
   }
 }

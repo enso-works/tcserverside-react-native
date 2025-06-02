@@ -6,6 +6,6 @@ export class TCSelectContentEvent extends TCEvent {
 
   constructor() {
     super();
-    super.name = 'select_content';
+    this.name = 'select_content';
   }
 }

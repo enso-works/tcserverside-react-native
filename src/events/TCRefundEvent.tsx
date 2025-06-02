@@ -20,8 +20,8 @@ export class TCRefundEvent extends TCECommerceEvent {
     items?: Array<TCItem>
   ) {
     super();
-    super.name = 'refund';
-    super.currency = currency;
+    this.name = 'refund';
+    this.currency = currency;
     this.ID = ID;
     this.value = value;
     this.type = type;

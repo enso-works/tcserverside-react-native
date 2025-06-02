@@ -2,10 +2,11 @@
   "name": "@commandersact/tcserverside-react-native",
   "version": "1.2.5",
   "description": " Commanders Act's ServerSide SDK bridge for react native",
-  "main": "./src/index",
-  "module": "src/index",
-  "react-native": "src/index",
-  "source": "src/index",
+  "main": "./src/index.tsx",
+  "module": "src/index.tsx",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "types": "./lib/typescript/index.d.ts",
   "exports": {
     ".": "./src/index.tsx"
   },

@@ -9,6 +9,6 @@ export class TCGenerateLeadEvent extends TCEvent {
     super();
     this.value = value;
     this.currency = currency;
-    super.name = 'generate_lead';
+    this.name = 'generate_lead';
   }
 }

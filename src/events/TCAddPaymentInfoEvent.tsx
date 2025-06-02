@@ -7,7 +7,7 @@ export class TCAddPaymentInfoEvent extends TCECommerceEvent {
 
   constructor(paymentMethod?: string) {
     super();
-    super.name = 'add_payment_info';
+    this.name = 'add_payment_info';
     this.paymentMethod = paymentMethod;
   }
 }

@@ -15,6 +15,10 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CC05BE4C7E3EB55C0F388BB4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */; };
 		E373ABE79C11C489319106F6 /* Pods_TcserversideExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9565AF47D9120DDF503701F0 /* Pods_TcserversideExample.framework */; };
+		EA847C812DED63100090F56B /* privacy.json in Resources */ = {isa = PBXBuildFile; fileRef = EA847C802DED63100090F56B /* privacy.json */; };
+		EA847C832DED63290090F56B /* purposes-fr.json in Resources */ = {isa = PBXBuildFile; fileRef = EA847C822DED63290090F56B /* purposes-fr.json */; };
+		EA847C852DED63450090F56B /* vendor-list.json in Resources */ = {isa = PBXBuildFile; fileRef = EA847C842DED63450090F56B /* vendor-list.json */; };
+		EA847C872DED636B0090F56B /* google-atp-list.json in Resources */ = {isa = PBXBuildFile; fileRef = EA847C862DED636B0090F56B /* google-atp-list.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,12 +56,16 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TcserversideExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TcserversideExample/main.m; sourceTree = "<group>"; };
 		3249B9EB53FE14E2028648BB /* Pods_TcserversideExample_TcserversideExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TcserversideExample_TcserversideExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TcserversideExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		60777C4CB12110991544D42B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = TcserversideExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7D3DF35A9B7B1F81F74D06A0 /* Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-TcserversideExample-TcserversideExampleTests/Pods-TcserversideExample-TcserversideExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TcserversideExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9565AF47D9120DDF503701F0 /* Pods_TcserversideExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TcserversideExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C62A491A0C08664BE746A625 /* Pods-TcserversideExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample.release.xcconfig"; path = "Target Support Files/Pods-TcserversideExample/Pods-TcserversideExample.release.xcconfig"; sourceTree = "<group>"; };
 		D11A92F840066DF37DEF34F6 /* Pods-TcserversideExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TcserversideExample.debug.xcconfig"; path = "Target Support Files/Pods-TcserversideExample/Pods-TcserversideExample.debug.xcconfig"; sourceTree = "<group>"; };
+		EA847C802DED63100090F56B /* privacy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = privacy.json; sourceTree = "<group>"; };
+		EA847C822DED63290090F56B /* purposes-fr.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "purposes-fr.json"; sourceTree = "<group>"; };
+		EA847C842DED63450090F56B /* vendor-list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "vendor-list.json"; sourceTree = "<group>"; };
+		EA847C862DED636B0090F56B /* google-atp-list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "google-atp-list.json"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -101,6 +109,10 @@
 		13B07FAE1A68108700A75B9A /* TcserversideExample */ = {
 			isa = PBXGroup;
 			children = (
+				EA847C862DED636B0090F56B /* google-atp-list.json */,
+				EA847C842DED63450090F56B /* vendor-list.json */,
+				EA847C822DED63290090F56B /* purposes-fr.json */,
+				EA847C802DED63100090F56B /* privacy.json */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -259,9 +271,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA847C832DED63290090F56B /* purposes-fr.json in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				EA847C852DED63450090F56B /* vendor-list.json in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				EA847C812DED63100090F56B /* privacy.json in Resources */,
 				CC05BE4C7E3EB55C0F388BB4 /* PrivacyInfo.xcprivacy in Resources */,
+				EA847C872DED636B0090F56B /* google-atp-list.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

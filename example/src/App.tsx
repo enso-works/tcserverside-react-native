@@ -150,7 +150,7 @@ const ButtonRow = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.consentButton}
-          onPress={TCConsent.statShowVendorScreen}
+          onPress={() => TCConsent.statShowVendorScreen()}
         >
           <Text style={styles.buttonText}>statShowVendorScreen</Text>
         </TouchableOpacity>

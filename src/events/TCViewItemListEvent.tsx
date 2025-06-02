@@ -7,7 +7,7 @@ export class TCViewItemListEvent extends TCEvent {
 
   constructor(items?: Array<TCItem>) {
     super();
-    super.name = 'view_item_list';
+    this.name = 'view_item_list';
     this.items = items ? items : new Array<TCItem>();
   }
 }

@@ -6,7 +6,7 @@ export class TCViewCartEvent extends TCECommerceEvent {
 
   constructor(items?: Array<TCItem>) {
     super();
-    super.name = 'view_cart';
+    this.name = 'view_cart';
     this.items = items ? items : new Array<TCItem>();
   }
 }

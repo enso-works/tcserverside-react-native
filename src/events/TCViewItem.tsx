@@ -5,6 +5,6 @@ export class TCViewItem extends TCECommerceEvent {
 
   constructor() {
     super();
-    super.name = 'view_item';
+    this.name = 'view_item';
   }
 }

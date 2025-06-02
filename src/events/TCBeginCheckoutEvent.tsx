@@ -7,6 +7,6 @@ export class TCBeginCheckoutEvent extends TCECommerceEvent {
 
   constructor() {
     super();
-    super.name = 'begin_checkout';
+    this.name = 'begin_checkout';
   }
 }

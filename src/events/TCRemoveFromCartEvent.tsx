@@ -6,7 +6,7 @@ export class TCRemoveFromCartEvent extends TCECommerceEvent {
 
   constructor(items?: Array<TCItem>) {
     super();
-    super.name = 'remove_from_cart';
+    this.name = 'remove_from_cart';
     this.items = items ? items : new Array<TCItem>();
   }
 }
