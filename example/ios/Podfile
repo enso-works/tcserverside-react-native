@@ -27,6 +27,7 @@ target 'TcserversideExample' do
 
   pod "tcserverside-react-native-swift", :path => '../node_modules/@commandersact/tcserverside-react-native/tcserverside-react-native-swift.podspec'
   pod "tccore-react-native-swift", :path => '../node_modules/@commandersact/tccore-react-native/tccore-react-native-swift.podspec'
+  pod "tcconsent-react-native-swift", :path => '../node_modules/@commandersact/tcconsent-react-native/tcconsent-react-native-swift.podspec'
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -55,6 +56,21 @@ target 'TcserversideExample' do
         # Ref: https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes#Deprecations
         config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= '$(inherited) '
         config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << '"_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION" '
+        
+        # Fix for React Native C++ compilation issues with Xcode 16+
+        if pod_name.to_s.start_with?('RCT-Folly') || pod_name.to_s.start_with?('React-')
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= '$(inherited) '
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << '"FOLLY_NO_CONFIG=1" '
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << '"FOLLY_MOBILE=1" '
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << '"FOLLY_USE_LIBCPP=1" '
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << '"FOLLY_CFG_NO_COROUTINES=1" '
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+          config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -DFOLLY_CFG_NO_COROUTINES=1'
+          
+          # Fix for simulator builds with Xcode 16+ - exclude x86_64 architecture
+          config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'x86_64'
+          config.build_settings['VALID_ARCHS'] = 'arm64'
+        end
       end
     end
   end

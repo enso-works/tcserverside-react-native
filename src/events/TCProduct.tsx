@@ -1,7 +1,6 @@
-import {TCAdditionalProperties} from './TCAdditionalProperties'
+import { TCAdditionalProperties } from './TCAdditionalProperties';
 
-export class TCProduct extends TCAdditionalProperties
-{
+export class TCProduct extends TCAdditionalProperties {
   ID?: string;
   name?: string;
   price?: number;

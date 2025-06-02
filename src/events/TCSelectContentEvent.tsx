@@ -1,13 +1,11 @@
-import { TCEvent } from "./TCEvent";
+import { TCEvent } from './TCEvent';
 
-export class TCSelectContentEvent extends TCEvent
-{
+export class TCSelectContentEvent extends TCEvent {
   contentType: string;
   itemID: string;
 
-  constructor()
-  {
+  constructor() {
     super();
-    super.name = "select_content";
+    super.name = 'select_content';
   }
 }

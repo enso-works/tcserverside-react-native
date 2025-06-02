@@ -1,12 +1,10 @@
-import { TCECommerceEvent } from "./TCECommerceEvent";
+import { TCECommerceEvent } from './TCECommerceEvent';
 
-export class TCViewItem extends TCECommerceEvent
-{
+export class TCViewItem extends TCECommerceEvent {
   revenue: number;
 
-  constructor()
-  {
+  constructor() {
     super();
-    super.name = "view_item";
+    super.name = 'view_item';
   }
 }

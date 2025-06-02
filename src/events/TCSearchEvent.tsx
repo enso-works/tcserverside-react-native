@@ -1,14 +1,11 @@
+import { TCEvent } from './TCEvent';
 
-import { TCEvent } from "./TCEvent";
-
-export class TCSearchEvent extends TCEvent
-{
+export class TCSearchEvent extends TCEvent {
   searchTerm?: string;
 
-  constructor(searchTerm?: string)
-  {
+  constructor(searchTerm?: string) {
     super();
-    super.name = "search";
+    super.name = 'search';
     this.searchTerm = searchTerm;
   }
 }

@@ -1,10 +1,8 @@
-import { TCEvent } from "./TCEvent";
+import { TCEvent } from './TCEvent';
 
-export class TCCustomEvent extends TCEvent
-{
-  constructor(eventName?: string)
-  {
-    super()
+export class TCCustomEvent extends TCEvent {
+  constructor(eventName?: string) {
+    super();
     super.name = eventName;
   }
 }
