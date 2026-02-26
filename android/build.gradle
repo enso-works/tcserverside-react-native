@@ -47,6 +47,10 @@ android {
   if (supportsNamespace()) {
     namespace "com.tcserverside"
 
+    defaultConfig {
+      consumerProguardFiles 'src/main/proguard-rules.pro'
+    }
+
     sourceSets {
       main {
         manifest.srcFile "src/main/AndroidManifestNew.xml"
