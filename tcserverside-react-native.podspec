@@ -12,16 +12,15 @@ Pod::Spec.new do |s|
   s.homepage = "https://github.com/commandersAct/tcserverside-react-native"
   s.license = { :type => "Commercial", :file => "LICENSE" }
   s.authors = { "CommandersAct" => "mobile@commandersact.com" }
-  s.platforms = { :ios => "11.0" }
+  s.platforms = { :ios => "15.1" }
   s.source = { :git => "https://github.com/commandersAct/tcserverside-react-native.git", :tag => package["version"] }
-  s.source_files = "ios/**/*.{h,c,m,mm}"
+  s.source_files = "ios/**/*.{h,c,m,mm,swift}"
   s.requires_arc = true
   s.swift_version = "5.0"
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
   s.dependency 'React-Core'
-  s.dependency 'IOSV5-TCCore', '5.4.5'
-  s.dependency 'TCServerSide_noIDFA', '5.4.7'
+  s.dependency 'IOSV5-TCCore', '5.4.6'
+  s.dependency 'TCServerSide_noIDFA', '5.5.0'
 
 end
-

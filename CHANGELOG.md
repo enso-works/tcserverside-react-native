@@ -1,3 +1,14 @@
+## 1.4.0
+
+* Fixed JS events classes.
+* Fixed `getPermanentData` throwing at runtime — now takes a key and resolves with the stored value.
+* Fixed `initServerSide` resolving before native initialisation had actually completed.
+* Upgrade Android Core dependency to [5.5.0](https://github.com/CommandersAct/AndroidV5/blob/master/TCCore/changelog_Android_Core.md)
+* Upgrade Android ServerSide dependency to [5.6.0](https://github.com/CommandersAct/AndroidV5/blob/master/TCServerSide/changelog_Android_ServerSide.md)
+* Upgrade iOS TCCore dependency to [5.4.6](https://github.com/CommandersAct/iOSV5/blob/master/TCCore/changelog_iOS_Core.md)
+* Upgrade iOS TCServerSide_noIDFA dependency to [5.5.0](https://github.com/CommandersAct/iOSV5/blob/master/TCServerSide/changelog_iOS_ServerSide.md)
+* Rewrote the README: full API reference, event reference, and a troubleshooting section covering native debug logs (`TCDebugInstance`) and iOS build issues.
+
 ## 1.3.2
 
 * Updated native dependencies.

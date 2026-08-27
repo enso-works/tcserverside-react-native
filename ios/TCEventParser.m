@@ -38,7 +38,7 @@
     {
         event = [self parseEcommerceEvent: eventDict withEvent: [[TCPurchaseEvent alloc] init]];
     }
-    else if ([eventName isEqualToString: @"add_payement_info"])
+    else if ([eventName isEqualToString: @"add_payment_info"])
     {
         event = [self parseEcommerceEvent: eventDict withEvent: [[TCAddPaymentInfoEvent alloc] init]];
     }

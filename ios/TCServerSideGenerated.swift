@@ -6,5 +6,5 @@ import Foundation
 
 struct TCServerSideReactNativeGenerated
 {
-    static let version = "1.3.2"
+    static let version = "1.4.0"
 }

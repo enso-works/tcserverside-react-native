@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tcserverside-react-native — Full Change Log</title>
+<style>
+  :root {
+    --bg: #eef1ef;
+    --surface: #ffffff;
+    --surface-2: #f5f7f5;
+    --text: #12181a;
+    --muted: #566361;
+    --faint: #7c8886;
+    --border: #d6dcd9;
+    --accent: #b1531e;
+    --accent-soft: #b1531e14;
+    --good: #2c7a58;
+    --info: #33607e;
+    --del-bg: #c0362b12;
+    --del-text: #8a2a20;
+    --add-bg: #2c7a5812;
+    --add-text: #235f45;
+    --hunk-bg: #33607e14;
+    --hunk-text: #33607e;
+    --shadow: 0 1px 2px rgba(20, 24, 22, 0.04), 0 8px 24px rgba(20, 24, 22, 0.05);
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10151a;
+      --surface: #161d22;
+      --surface-2: #1b2329;
+      --text: #e7ede9;
+      --muted: #9caaa5;
+      --faint: #6d7b77;
+      --border: #2a3439;
+      --accent: #e3935a;
+      --accent-soft: #e3935a1c;
+      --good: #55bd93;
+      --info: #7bafcf;
+      --del-bg: #e07a6a1a;
+      --del-text: #e6a196;
+      --add-bg: #55bd931a;
+      --add-text: #8fd9ba;
+      --hunk-bg: #7bafcf1c;
+      --hunk-text: #9cc6e0;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Sidebar ---------- */
+
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 1.6rem 1.2rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 860px) {
+    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .sidebar h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.25;
+    margin: 0 0 0.9rem;
+    text-wrap: balance;
+  }
+
+  .sidebar .meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    margin-bottom: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.55rem 0.6rem;
+  }
+
+  .stat-tile b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-tile span {
+    font-size: 0.68rem;
+    color: var(--faint);
+  }
+
+  .sidebar nav {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sidebar ul li a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.82rem;
+  }
+
+  .sidebar ul li a:hover { background: var(--surface-2); text-decoration: none; }
+
+  .nav-num {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--faint);
+    flex: none;
+  }
+
+  .nav-path {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    word-break: break-all;
+    flex: 1;
+  }
+
+  .nav-badge, .badge {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    padding: 0.12em 0.4em;
+    border-radius: 4px;
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .badge { font-size: 0.65rem; padding: 0.2em 0.55em; }
+
+  .nav-badge.new, .badge.new { background: var(--add-bg); color: var(--add-text); }
+  .nav-badge.mod, .badge.mod { background: var(--hunk-bg); color: var(--hunk-text); }
+
+  /* ---------- Main content ---------- */
+
+  main {
+    padding: 2.4rem 2.6rem 6rem;
+    max-width: 1080px;
+  }
+
+  @media (max-width: 600px) {
+    main { padding: 1.6rem 1.1rem 4rem; }
+  }
+
+  .intro {
+    max-width: 62em;
+    margin-bottom: 3rem;
+  }
+
+  .intro h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin: 0 0 0.7rem;
+  }
+
+  .intro p { color: var(--muted); margin: 0 0 0.9rem; }
+  .intro ul { color: var(--muted); margin: 0 0 0.9rem; padding-left: 1.2rem; }
+  .intro li { margin-bottom: 0.35rem; }
+  .intro code { font-family: var(--font-mono); font-size: 0.88em; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 0.1em 0.4em; }
+
+  section {
+    margin-bottom: 3.2rem;
+    scroll-margin-top: 1rem;
+  }
+
+  .file-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .file-num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+
+  .file-head h2 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0;
+    word-break: break-all;
+  }
+
+  .diff-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow-x: auto;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  pre.diff {
+    margin: 0;
+    padding: 0.9rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.55;
+    white-space: pre;
+  }
+
+  pre.diff span {
+    display: block;
+    padding: 0 1.1rem;
+  }
+
+  pre.diff .add { background: var(--add-bg); color: var(--add-text); }
+  pre.diff .del { background: var(--del-bg); color: var(--del-text); }
+  pre.diff .hunk { background: var(--hunk-bg); color: var(--hunk-text); font-weight: 600; margin: 0.3rem 0; }
+  pre.diff .ctx { color: var(--muted); }
+  pre.diff .meta { color: var(--faint); font-style: italic; }
+
+  footer {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="eyebrow">CommandersAct · React Native Bridges</div>
+    <h1>tcserverside&#8209;react&#8209;native — full change log</h1>
+    <div class="meta">
+      <span>Branch: tcserverside_fixes</span>
+      <span>Date: 2026&#8209;08&#8209;07</span>
+      <span>Status: see note below</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-tile"><b>4</b><span>bugs fixed</span></div>
+      <div class="stat-tile"><b>3</b><span>capabilities bridged</span></div>
+      <div class="stat-tile"><b>9</b><span>files touched</span></div>
+      <div class="stat-tile"><b>1</b><span>new file</span></div>
+    </div>
+    <nav>Files in this change</nav>
+    <ul>
+      <li><a href="#readme-md"><span class="nav-num">01</span> <span class="nav-path">README.md</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#android-src-main-java-com-tcserverside-tcserversidemodule-java"><span class="nav-num">02</span> <span class="nav-path">android/src/main/java/com/tcserverside/TcserversideModule.java</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#ios-tceventparser-m"><span class="nav-num">03</span> <span class="nav-path">ios/TCEventParser.m</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#ios-tcserverside-swift"><span class="nav-num">04</span> <span class="nav-path">ios/Tcserverside.swift</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#src-tcapp-tsx"><span class="nav-num">05</span> <span class="nav-path">src/TCApp.tsx</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#src-tcdevice-tsx"><span class="nav-num">06</span> <span class="nav-path">src/TCDevice.tsx</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#src-tclifecycle-tsx"><span class="nav-num">07</span> <span class="nav-path">src/TCLifecycle.tsx</span> <span class="nav-badge new">NEW</span></a></li>
+      <li><a href="#src-tcserverside-tsx"><span class="nav-num">08</span> <span class="nav-path">src/TCServerSide.tsx</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+      <li><a href="#src-index-tsx"><span class="nav-num">09</span> <span class="nav-path">src/index.tsx</span> <span class="nav-badge mod">MODIFIED</span></a></li>
+    </ul>
+  </aside>
+  <main>
+    <div class="intro">
+      <h2>What this document is</h2>
+      <p>The full <code>git diff</code> between this branch's pre-session commit (<code>0a078f5</code>, "remove manual linking") and the current working tree — the net result of the whole session, not a blow-by-blow. Video event bridging, a Firebase-destination pass-through, and three platform-dependent <code>TCDevice</code> fields (<code>IDFA</code>, <code>adTrackingEnabled</code>, <code>user_agent</code>) were all implemented at some point and then fully reverted on request; none of that appears below because it nets to zero against the baseline.</p>
+      <p>Scope, in one paragraph: rebuilt <code>README.md</code> from scratch around npm-only installation; fixed four pre-existing bugs (<code>add_payment_info</code> mis-typed as <code>add_payement_info</code> on iOS, <code>getPermanentData</code> called with the wrong arguments, <code>initServerSide</code> not actually awaiting its native callback, <code>removePermanentData</code> missing from the JS surface entirely); and — once pointed at the real native SDK source — bridged <code>TCLifecycle</code>, <code>waitForUserAgent</code>, and <code>TCApp.consentVersion</code>/<code>TCDevice.language</code>/<code>region</code>.</p>
+      <p><strong>Note on commit status:</strong> a commit titled "serverside bridge fixes" (<code>77663ed</code>) already exists on this branch, made outside this session — not by this assistant, which never ran <code>git commit</code>. It captures most of the work below except this file's own video-events revert, which is still only in the working tree. If the video/Firebase/device-field code shouldn't be part of that commit either, it'll need a follow-up commit or an amend — ask before either.</p>
+    </div>
+    
+  <section id="readme-md">
+    <div class="file-head">
+      <span class="file-num">01</span>
+      <h2>README.md</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -1,109 +1,472 @@</span>
+<span class="del">-# tcserverside</span>
+<span class="add">+# @commandersact/tcserverside-react-native</span>
+<span class="add">+</span>
+<span class="add">+CommandersAct's ServerSide mobile SDK bridge for React Native.</span>
+<span class="add">+</span>
+<span class="add">+This module sends structured, typed events from your app to Commanders Act's servers, which then forward the data to your configured destinations (analytics, ads, CRM…) — no per-partner SDK required. It can:</span>
+<span class="add">+</span>
+<span class="add">+- Send predefined e-commerce and engagement events (purchase, add to cart, login, page view, …) as well as fully custom events.</span>
+<span class="add">+- Carry app, device, and user context on every hit automatically.</span>
+<span class="add">+- Queue hits offline and replay them once a connection is available.</span>
+<span class="add">+- Respect user consent automatically when used alongside `@commandersact/tcconsent-react-native`.</span>
+<span class="add">+</span>
+<span class="add">+This bridge wraps the native [iOS](#related-documentation) and [Android](#related-documentation) TCServerSide SDKs — this README covers the React Native API surface; native behaviour, full payload structure, and destination-specific mapping are documented in full in the native guides linked under [Related Documentation](#related-documentation).</span>
+<span class="add">+</span>
+<span class="add">+## Table of Contents</span>
+<span class="add">+</span>
+<span class="add">+- [Installation](#installation)</span>
+<span class="add">+  - [1. Install](#1-install)</span>
+<span class="add">+  - [2. iOS setup](#2-ios-setup)</span>
+<span class="add">+  - [3. Android setup](#3-android-setup)</span>
+<span class="add">+  - [Minimum requirements](#minimum-requirements)</span>
+<span class="add">+- [Quick start](#quick-start)</span>
+<span class="add">+- [API Reference](#api-reference)</span>
+<span class="add">+  - [Initialisation](#initialisation)</span>
+<span class="add">+  - [Consent behaviour](#consent-behaviour)</span>
+<span class="add">+  - [Executing events](#executing-events)</span>
+<span class="add">+  - [Event Reference](#event-reference)</span>
+<span class="add">+  - [Custom events](#custom-events)</span>
+<span class="add">+  - [TCApp, TCDevice &amp; TCLifecycle](#tcapp-tcdevice--tclifecycle)</span>
+<span class="add">+  - [How to customise your payload](#how-to-customise-your-payload)</span>
+<span class="add">+  - [Permanent Data](#permanent-data)</span>
+<span class="add">+  - [Background mode](#background-mode)</span>
+<span class="add">+  - [Disabling / enabling](#disabling--enabling)</span>
+<span class="add">+  - [Advertising ID](#advertising-id)</span>
+<span class="add">+  - [Waiting for the user-agent (iOS)](#waiting-for-the-user-agent-ios)</span>
+<span class="add">+  - [Migrating a legacy unique ID](#migrating-a-legacy-unique-id)</span>
+<span class="add">+- [Quick Reference — Function Recap](#quick-reference--function-recap)</span>
+<span class="add">+- [Related Documentation](#related-documentation)</span>
+<span class="add">+- [Demo App](#demo-app)</span>
+<span class="add">+- [Versions compatibility](#versions-compatibility)</span>
+<span class="add">+- [Troubleshooting](#troubleshooting)</span>
+<span class="add">+- [Support &amp; Contact](#support--contact)</span>
+<span class="add">+</span>
+<span class="add">+## Installation</span>
+<span class="add">+</span>
+<span class="add">+### 1. Install</span>
+<span class="ctx"> </span>
+<span class="del">- Commanders Act's ServerSide SDK bridge for react native</span>
+<span class="add">+```sh</span>
+<span class="add">+npm install @commandersact/tcserverside-react-native @commandersact/tccore-react-native</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+or</span>
+<span class="add">+</span>
+<span class="add">+```sh</span>
+<span class="add">+yarn add @commandersact/tcserverside-react-native @commandersact/tccore-react-native</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-## 1. Installation</span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; `@commandersact/tccore-react-native` is a required peer dependency — it provides `TCUserInstance` (user identification, forwarded with every hit) and `TCDebugInstance` (native debug logging). See [Related Documentation](#related-documentation).</span>
+<span class="ctx"> </span>
+<span class="del">-### 1.1 Package.json </span>
+<span class="add">+### 2. iOS setup</span>
+<span class="ctx"> </span>
+<span class="del">-add the following dependencies into your package.json, and then install them using `npm install`</span>
+<span class="add">+No manual Podfile edits are required — the package autolinks via CocoaPods. Once installed, navigate to your `ios/` directory and run:</span>
+<span class="ctx"> </span>
+<span class="ctx"> ```sh</span>
+<span class="del">-    "@commandersact/tccore-react-native": "git+https://github.com/commandersact/tccore-react-native#*.*.*", #check latest available version</span>
+<span class="del">-    "@commandersact/tcserverside-react-native": "git+https://github.com/commandersact/tcserverside-react-native#*.*.*", #check latest available version</span>
+<span class="add">+pod install</span>
+<span class="ctx"> ```</span>
+<span class="ctx"> </span>
+<span class="add">+### 3. Android setup</span>
+<span class="add">+</span>
+<span class="add">+No extra step is needed — the module is autolinked.</span>
+<span class="add">+</span>
+<span class="add">+### Minimum requirements</span>
+<span class="add">+</span>
+<span class="add">+- iOS 13.0+</span>
+<span class="add">+- Android API 21+</span>
+<span class="add">+</span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; This package works with Expo apps using `expo prebuild` or a custom development client. Expo Go / the managed-only workflow is not supported (native code is required).</span>
+<span class="add">+</span>
+<span class="add">+## Quick start</span>
+<span class="ctx"> </span>
+<span class="del">-### 1.2 Podfile - iOS Specific</span>
+<span class="add">+```tsx</span>
+<span class="add">+import * as TCServerSide from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+import { TCBeginCheckoutEvent } from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+</span>
+<span class="add">+// Mandatory — call once, as early as possible in your app</span>
+<span class="add">+await TCServerSide.initServerSide(3311, 'a_source_key');</span>
+<span class="ctx"> </span>
+<span class="del">-Once the JS packages installed, you'll need to manually add the required pods to your Podfile:</span>
+<span class="add">+// Build an event</span>
+<span class="add">+const event = new TCBeginCheckoutEvent();</span>
+<span class="add">+event.currency = 'USD';</span>
+<span class="add">+event.value = 12;</span>
+<span class="ctx"> </span>
+<span class="add">+// Send it</span>
+<span class="add">+TCServerSide.execute(event);</span>
+<span class="ctx"> ```</span>
+<span class="del">-pod "tccore-react-native-swift", :path =&gt; '../node_modules/@commandersact/tccore-react-native/tccore-react-native-swift.podspec'</span>
+<span class="del">-pod "tcserverside-react-native-swift", :path =&gt; '../node_modules/@commandersact/tcserverside-react-native/tcserverside-react-native-swift.podspec'</span>
+<span class="add">+</span>
+<span class="add">+Once initialised, you can read or override the automatically gathered context at any time:</span>
+<span class="add">+</span>
+<span class="add">+```tsx</span>
+<span class="add">+import { TCAppInstance, TCDeviceInstance } from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+import { TCUserInstance } from '@commandersact/tccore-react-native';</span>
+<span class="add">+</span>
+<span class="add">+console.log(TCDeviceInstance.sdkID);</span>
+<span class="add">+console.log(TCAppInstance.nameSpace);</span>
+<span class="add">+</span>
+<span class="add">+TCDeviceInstance.sdkID = 'my_custom_sdk_id';</span>
+<span class="add">+TCAppInstance.nameSpace = 'my_custom_namespace';</span>
+<span class="add">+TCUserInstance.email = 'user@example.com';</span>
+<span class="ctx"> ```</span>
+<span class="ctx"> </span>
+<span class="del">-check the demo app podfile here : https://github.com/CommandersAct/TCDemoReactNative/blob/master/ios/Podfile</span>
+<span class="add">+If you need the full payload schema for a given event — every field, its type, and where it ends up in the JSON sent to our servers — see [Events Reference](#related-documentation) and [Mobile SDK Event Specificity](#related-documentation).</span>
+<span class="ctx"> </span>
+<span class="del">-## 2. Usage</span>
+<span class="add">+## API Reference</span>
+<span class="ctx"> </span>
+<span class="del">-This bridge ports the TCServerSide SDK available on [Android](https://github.com/CommandersAct/androidV5/tree/master/TCServerSide) and [iOS](https://github.com/CommandersAct/iOSV5/tree/master/TCServerSide)</span>
+<span class="add">+### Initialisation</span>
+<span class="ctx"> </span>
+<span class="del">-It is highly recommanded to take a look on the native SDK documentation for more insights and details. </span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.initServerSide(</span>
+<span class="add">+  siteId: number,</span>
+<span class="add">+  sourceKey: string,</span>
+<span class="add">+  defaultBehaviour?: TCServerSide.ETCConsentBehaviour // PB_DEFAULT_BEHAVIOUR (default) | PB_ALWAYS_ENABLED | PB_DISABLED_BY_DEFAULT</span>
+<span class="add">+): Promise&lt;void&gt;</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-example code : </span>
+<span class="add">+Call this once, as early as possible (your app's root component or entry point) — every other function in this package assumes it has already run. `siteId` and `sourceKey` are provided by your consulting team; `siteId` identifies your platform setup, `sourceKey` identifies this mobile source within it.</span>
+<span class="ctx"> </span>
+<span class="del">-```js</span>
+<span class="del">-// imports : ...</span>
+<span class="add">+Once the returned promise resolves, `TCAppInstance` and `TCDeviceInstance` (below), as well as `TCUserInstance` from `@commandersact/tccore-react-native`, are populated with the values read from the native SDK (SDK version, device model, generated anonymous ID, …).</span>
+<span class="ctx"> </span>
+<span class="del">-import * as TCServerSide from '@commandersact/tcserverside-react-native';</span>
+<span class="del">-import {TCBeginCheckoutEvent} from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+### Consent behaviour</span>
+<span class="add">+</span>
+<span class="add">+`defaultBehaviour` controls what happens to hits recorded before consent is known:</span>
+<span class="add">+</span>
+<span class="add">+| Behaviour | Description |</span>
+<span class="add">+|---|---|</span>
+<span class="add">+| `PB_DEFAULT_BEHAVIOUR` | Waits for consent if `@commandersact/tcconsent-react-native` is present; enabled immediately otherwise. |</span>
+<span class="add">+| `PB_ALWAYS_ENABLED` | Always sends hits regardless of consent state. Use for tags that do not require consent. |</span>
+<span class="add">+| `PB_DISABLED_BY_DEFAULT` | Starts disabled and does not queue hits before consent is given. Use when you manage consent yourself, outside of our Consent module. |</span>
+<span class="add">+</span>
+<span class="add">+Consent, once known, is forwarded inside `TCUserInstance` (from `@commandersact/tccore-react-native`). For the full behaviour and setup, see the [Consent module](#related-documentation).</span>
+<span class="ctx"> </span>
+<span class="del">-// initialisation ... (Mandatory !)</span>
+<span class="del">-	TCServerSide.initServerSide(3311, 'a_source_key')</span>
+<span class="add">+### Executing events</span>
+<span class="ctx"> </span>
+<span class="del">-// creating event : </span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.execute(event: TCEvent): void</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+Packages the event — combined with the current `TCApp`, `TCDevice`, and `TCUser` context — into a JSON payload and sends it (or queues it, per [Consent behaviour](#consent-behaviour)).</span>
+<span class="add">+</span>
+<span class="add">+&gt; [!IMPORTANT]</span>
+<span class="add">+&gt; The standard event classes below only accept their own declared fields (plus whatever you add via `addAdditionalProperty*`, see [Custom events](#custom-events)). Setting an arbitrary extra property directly on a standard event object (e.g. `purchaseEvent.somethingElse = 'x'`) has no effect on iOS/Android event parsing — anything outside the class's declared fields must go through `addAdditionalProperty*`.</span>
+<span class="add">+</span>
+<span class="add">+### Event Reference</span>
+<span class="add">+</span>
+<span class="add">+Every event extends the abstract `TCEvent`, which carries `name` (the native event key — already set by each subclass' constructor), `pageType`, and `pageName`, plus the [`addAdditionalProperty*` family](#custom-events) inherited from `TCAdditionalProperties`. E-commerce events additionally extend `TCECommerceEvent`, adding `currency` and `items: TCItem[]`.</span>
+<span class="add">+</span>
+<span class="add">+| Class | Native event name | Constructor | Extra fields |</span>
+<span class="add">+|---|---|---|---|</span>
+<span class="add">+| `TCPageViewEvent` | `page_view` | `(type?: string)` → sets `pageType` | `pageName` |</span>
+<span class="add">+| `TCLoginEvent` | `login` | `()` | `method` |</span>
+<span class="add">+| `TCSignUpEvent` | `sign_up` | `()` | `method` |</span>
+<span class="add">+| `TCSearchEvent` | `search` | `(searchTerm?: string)` | `searchTerm` |</span>
+<span class="add">+| `TCGenerateLeadEvent` | `generate_lead` | `(value?, currency?)` | `value`, `currency`, `ID` |</span>
+<span class="add">+| `TCSelectContentEvent` | `select_content` | `()` | `contentType`, `itemID` |</span>
+<span class="add">+| `TCSelectItemEvent` | `select_item` | `(items?: TCItem[])` | `itemListName`, `items` |</span>
+<span class="add">+| `TCViewItemListEvent` | `view_item_list` | `(items?: TCItem[])` | `itemListName`, `items` |</span>
+<span class="add">+| `TCViewItem` | `view_item` | `()` | `revenue` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCViewCartEvent` | `view_cart` | `(items?: TCItem[])` | `value` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCAddToCartEvent` | `add_to_cart` | `(items?, value?, currency?)` | `value` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCAddToWishlistEvent` | `add_to_wishlist` | `(items?: TCItem[])` | `value` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCRemoveFromCartEvent` | `remove_from_cart` | `(items?: TCItem[])` | `value` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCAddShippingInfoEvent` | `add_shipping_info` | `(value?, currency?, items?)` | `value`, `coupon`, `shippingTier` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCAddPaymentInfoEvent` | `add_payment_info` | `(paymentMethod?: string)` | `paymentMethod`, `coupon`, `revenue` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCBeginCheckoutEvent` | `begin_checkout` | `()` | `revenue`, `value`, `coupon` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCPurchaseEvent` | `purchase` | `(ID?, revenue?, value?, currency?, type?, paymentMethod?, status?, items?)` | `ID`, `revenue`, `value`, `shippingAmount`, `taxAmount`, `coupon`, `type`, `paymentMethod`, `status`, `url` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCRefundEvent` | `refund` | `(ID?, revenue?, value?, currency?, type?, items?)` | `ID`, `revenue`, `value`, `shippingAmount`, `taxAmount`, `coupon`, `type`, `url` *(+ e-commerce fields)* |</span>
+<span class="add">+| `TCCustomEvent` | *(your own name)* | `(eventName?: string)` | none — use `addAdditionalProperty*` for everything |</span>
+<span class="add">+</span>
+<span class="add">+Two supporting classes are used inside `items`:</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+class TCItem extends TCAdditionalProperties {</span>
+<span class="add">+  ID?: string;</span>
+<span class="add">+  product?: TCProduct;</span>
+<span class="add">+  variant?: string;</span>
+<span class="add">+  list_position?: number;</span>
+<span class="add">+  discount?: number;</span>
+<span class="add">+  quantity?: number;</span>
+<span class="add">+  affiliation?: string;</span>
+<span class="add">+  coupon?: string;</span>
+<span class="add">+}</span>
+<span class="add">+</span>
+<span class="add">+class TCProduct extends TCAdditionalProperties {</span>
+<span class="add">+  ID?: string;</span>
+<span class="add">+  name?: string;</span>
+<span class="add">+  price?: number;</span>
+<span class="add">+  currency?: string;</span>
+<span class="add">+  categories?: string[];</span>
+<span class="add">+  brand?: string;</span>
+<span class="add">+  colors?: string[];</span>
+<span class="add">+  size?: string;</span>
+<span class="add">+}</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+Example with items:</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+import { TCPurchaseEvent, TCItem, TCProduct } from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+</span>
+<span class="add">+const item = new TCItem();</span>
+<span class="add">+item.ID = 'iID1';</span>
+<span class="add">+item.quantity = 1;</span>
+<span class="add">+item.product = Object.assign(new TCProduct(), { ID: 'pID1', name: 'pName1', price: 1.5 });</span>
+<span class="add">+</span>
+<span class="add">+const event = new TCPurchaseEvent('ID', 1.1, 12.2, 'EUR', 'purchase', 'CreditCard', 'waiting', [item]);</span>
+<span class="add">+TCServerSide.execute(event);</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+### Custom events</span>
+<span class="add">+</span>
+<span class="add">+When a standard class doesn't fit, send a fully custom event. Give it a meaningful name — it is used to route the event to your destinations.</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+import { TCCustomEvent } from '@commandersact/tcserverside-react-native';</span>
+<span class="ctx"> </span>
+<span class="del">-	let event = new TCBeginCheckoutEvent();</span>
+<span class="del">-  	event.currency = "USD"</span>
+<span class="del">-  	event.value = 12</span>
+<span class="add">+const event = new TCCustomEvent('eventName');</span>
+<span class="add">+event.addAdditionalProperty('myParam', 'myValue');</span>
+<span class="add">+TCServerSide.execute(event);</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+`TCAdditionalProperties` (the base class of every event, `TCItem`, and `TCProduct`) exposes the same family everywhere:</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+addAdditionalProperty(key: string, value: string): void</span>
+<span class="add">+addAdditionalPropertyWithMapValue(key: string, value: Object): void</span>
+<span class="add">+addAdditionalPropertyWithBooleanValue(key: string, value: boolean): void</span>
+<span class="add">+addAdditionalPropertyWithNumberValue(key: string, value: number): void</span>
+<span class="add">+addAdditionalPropertyWithArrayValue(key: string, value: Array&lt;any&gt;): void</span>
+<span class="ctx"> </span>
+<span class="del">-// executing event :</span>
+<span class="del">-  	TCServerSide.execute(event)</span>
+<span class="add">+getAdditionalProperties(): { [key: string]: any }</span>
+<span class="add">+removeAdditionalProperty(key: string): void</span>
+<span class="add">+clearAdditionalProperties(): void</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="add">+### TCApp, TCDevice &amp; TCLifecycle</span>
+<span class="add">+</span>
+<span class="add">+`TCApp`, `TCDevice`, and `TCLifecycle` are singletons — exposed as `TCAppInstance`, `TCDeviceInstance`, and `TCLifecycleInstance` — backing the `context.app`, `context.device`, and `context.device.lifecycle` sections of every event's payload. Edit them once and every event sent afterwards picks up the change. (The equivalent `TCUser` singleton lives in `@commandersact/tccore-react-native` as `TCUserInstance` — see [Related Documentation](#related-documentation).)</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+class TCApp {</span>
+<span class="add">+  name?: string;</span>
+<span class="add">+  version?: string;</span>
+<span class="add">+  build?: string;</span>
+<span class="add">+  nameSpace?: string;</span>
+<span class="add">+  coreVersion?: string;</span>
+<span class="add">+  serverSideVersion?: string;</span>
+<span class="add">+  consentVersion?: string; // recomputed automatically if the Consent module is present</span>
+<span class="add">+  // + the addAdditionalProperty* family</span>
+<span class="add">+}</span>
+<span class="add">+</span>
+<span class="add">+class TCDevice {</span>
+<span class="add">+  sdkID?: string;</span>
+<span class="add">+  manufacturer?: string;</span>
+<span class="add">+  model?: string;</span>
+<span class="add">+  name?: string;</span>
+<span class="add">+  type?: string;</span>
+<span class="add">+  timezone?: string;</span>
+<span class="add">+  osName?: string;</span>
+<span class="add">+  osVersion?: string;</span>
+<span class="add">+  screenWidth?: number;</span>
+<span class="add">+  screenHeight?: number;</span>
+<span class="add">+  language?: string;</span>
+<span class="add">+  region?: string;</span>
+<span class="add">+  // + the addAdditionalProperty* family</span>
+<span class="add">+}</span>
+<span class="ctx"> ```</span>
+<span class="ctx"> </span>
+<span class="del">-If you wanna access other [event's payload](https://community.commandersact.com/platform-x/developers/tracking/about-events/mobile-sdk-event-specificity#event-specificity-for-mobile-app) schemes: </span>
+<span class="add">+`TCLifecycle` has no settable fields of its own — every value in its payload section (session/visit counters, foreground/background time, …) is computed internally by the native SDK. It only exposes the `addAdditionalProperty*` family, for injecting your own fields into that section:</span>
+<span class="ctx"> </span>
+<span class="del">-```js</span>
+<span class="del">-import {TCAppInstance, TCDeviceInstance} from '@commandersact/tcserverside-react-native';</span>
+<span class="add">+```ts</span>
+<span class="add">+import { TCLifecycleInstance } from '@commandersact/tcserverside-react-native';</span>
+<span class="ctx"> </span>
+<span class="del">-// you can directly read SDK intialised values : </span>
+<span class="del">-  console.log(TCDeviceInstance.sdkID)</span>
+<span class="del">-  console.log(TCAppInstance.nameSpace)</span>
+<span class="add">+TCLifecycleInstance.addAdditionalProperty('myKey', 'myValue');</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-or overwrite : </span>
+<span class="add">+Every `TCApp`/`TCDevice` field is a plain getter/setter — reading returns the last value set locally (or read from native at init); writing pushes the change straight to native.</span>
+<span class="ctx"> </span>
+<span class="del">-  console.log(TCDeviceInstance.sdkID = "my_custom_sdk_id"</span>
+<span class="del">-  TCAppInstance.nameSpace = "my_custom_namespace"</span>
+<span class="add">+```ts</span>
+<span class="add">+TCDeviceInstance.timezone = 'Europe/Paris';</span>
+<span class="add">+TCAppInstance.addAdditionalProperty('bridge_flavor', 'expo');</span>
+<span class="ctx"> ```</span>
+<span class="ctx"> </span>
+<span class="del">-## 3. Demo App : </span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; `getAdditionalProperties()` on `TCApp`/`TCDevice`/`TCLifecycle` returns the local JS-side map of what you've added through this session — it is not read back from native.</span>
+<span class="ctx"> </span>
+<span class="del">-For a full demo app, please check our TDemoReactNative : https://github.com/CommandersAct/TCDemoReactNative </span>
+<span class="add">+### How to customise your payload</span>
+<span class="ctx"> </span>
+<span class="del">-main usage is sending event to your commandersAct platform. </span>
+<span class="add">+Every field in the final JSON payload can be customised through three independent mechanisms — you can combine them freely:</span>
+<span class="ctx"> </span>
+<span class="add">+| You want to… | Use | Scope |</span>
+<span class="add">+|---|---|---|</span>
+<span class="add">+| Add data to one specific event | `event.addAdditionalProperty(...)` | That `execute` call only |</span>
+<span class="add">+| Add or override a field in `context.app` / `context.device` / `context.device.lifecycle` | `TCAppInstance.addAdditionalProperty(...)` / `TCDeviceInstance.addAdditionalProperty(...)` / `TCLifecycleInstance.addAdditionalProperty(...)` | All events, until changed again |</span>
+<span class="add">+| Attach an arbitrary key/value to every event | `TCServerSide.addPermanentData(...)` | All events, until removed |</span>
+<span class="ctx"> </span>
+<span class="del">-### 4. iOS Build Issues Fix Guide</span>
+<span class="add">+### Permanent Data</span>
+<span class="ctx"> </span>
+<span class="del">-On iOS, library linking can be fragile and files may easily break or become corrupted. If you encounter strange dependency issues, _OBJ_CLASS_$__ errors, or “not found” build failures, try the following steps:</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.addPermanentData(key: string, value: string): void</span>
+<span class="add">+TCServerSide.getPermanentData(key: string): Promise&lt;string&gt;</span>
+<span class="add">+TCServerSide.removePermanentData(key: string): Promise&lt;string&gt; // resolves with the removed value</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-1- Delete your node_modules folder</span>
+<span class="add">+Use this for values that never change at runtime (e.g. a vendor ID) and should be attached to every event without going through a singleton.</span>
+<span class="ctx"> </span>
+<span class="del">-2- Remove package-lock.json</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.addPermanentData('VENDOR_ID', 'UE-556XXXXX-01');</span>
+<span class="add">+const value = await TCServerSide.getPermanentData('VENDOR_ID');</span>
+<span class="add">+const removedValue = await TCServerSide.removePermanentData('VENDOR_ID');</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; Permanent Data has lower priority than a value set via `addAdditionalProperty` on an individual event — if the same key is set both ways, the per-event value wins.</span>
+<span class="add">+</span>
+<span class="add">+### Background mode</span>
+<span class="ctx"> </span>
+<span class="del">-3- Close Xcode if it’s open</span>
+<span class="add">+When the app goes to the background, ServerSide flushes queued hits and stops, to save battery and data. If your app has real background activity (e.g. audio playback), bypass this:</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.enableRunningInBackground(): void</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-4- Run npm install to reinstall dependencies</span>
+<span class="add">+One consequence: in normal mode, unsent hits are saved to disk on backgrounding. In background mode this isn't guaranteed to happen at the same point, so the SDK saves pending hits to disk more frequently instead.</span>
+<span class="ctx"> </span>
+<span class="del">-5- Delete ios/Podfile.lock</span>
+<span class="add">+### Disabling / enabling</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.disableServerSide(): void</span>
+<span class="add">+TCServerSide.enableServerSide(): void</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+Use `disableServerSide` when a user opts out of tracking outside of the Consent module's flow. It stops all internal systems (background handling, connectivity listeners, hit processing) and makes every subsequent call a no-op until you call `enableServerSide` — you don't need to guard your own calls.</span>
+<span class="add">+</span>
+<span class="add">+### Advertising ID</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.addAdvertisingID(): void</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+For privacy reasons, the advertising identifier (IDFA on iOS, AAID on Android) is never read automatically. Call this only after confirming the user has accepted the relevant consent category (and, on iOS 14+, after the system ATT prompt). It adds the identifier and its associated tracking-enabled flag to the native `context.device` payload for use on subsequent events.</span>
+<span class="add">+</span>
+<span class="add">+### Waiting for the user-agent (iOS)</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.waitForUserAgent(): void</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+iOS-only — no-op on Android, which reads the user-agent synchronously and doesn't need this. Apple removed the synchronous API for reading it, and on real devices the async fetch can occasionally take over a minute. Call this if a destination requires the user-agent; hits waiting to be sent get it appended once it becomes available.</span>
+<span class="add">+</span>
+<span class="add">+### Migrating a legacy unique ID</span>
+<span class="add">+</span>
+<span class="add">+Carried over from the SDK's v4→v5 migration path — only relevant if you're migrating from `TC_UNIQUEID`:</span>
+<span class="add">+</span>
+<span class="add">+```ts</span>
+<span class="add">+TCServerSide.useLegacyUniqueIDForAnonymousID(): void</span>
+<span class="add">+TCServerSide.useLegacyUniqueIDForConsentID(): void</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+Each pushes the legacy ID into the corresponding `TCUserInstance` field (`anonymous_id` or `consentID`) so continuity is preserved across the upgrade. If you were using `TC_IDFA`, `TC_SDK_ID`, or `TC_NORMALIZED_ID`, no action is needed.</span>
+<span class="add">+</span>
+<span class="add">+## Quick Reference — Function Recap</span>
+<span class="add">+</span>
+<span class="add">+| Function | Notes |</span>
+<span class="add">+|---|---|</span>
+<span class="add">+| `initServerSide` | Call once, first. Returns once native context (`TCApp`/`TCDevice`/`TCUser`) is populated. |</span>
+<span class="add">+| `execute` | Send any `TCEvent` instance. |</span>
+<span class="add">+| `addPermanentData` / `getPermanentData` / `removePermanentData` | Arbitrary key/values attached to every event. `getPermanentData`/`removePermanentData` are async. |</span>
+<span class="add">+| `enableRunningInBackground` | Opt in to keep sending while backgrounded. |</span>
+<span class="add">+| `disableServerSide` / `enableServerSide` | Manual opt-out/opt-in, outside of Consent module flow. |</span>
+<span class="add">+| `addAdvertisingID` | Call only after consent/ATT is confirmed. |</span>
+<span class="add">+| `waitForUserAgent` | iOS only — no-op on Android. |</span>
+<span class="add">+| `useLegacyUniqueIDForAnonymousID` / `useLegacyUniqueIDForConsentID` | v4 → v5 migration only. |</span>
+<span class="add">+| `TCAppInstance` / `TCDeviceInstance` / `TCLifecycleInstance` | Singletons backing `context.app` / `context.device` / `context.device.lifecycle` on every event. |</span>
+<span class="add">+| `TCUserInstance` (via `@commandersact/tccore-react-native`) | User identification and consent, forwarded with every event. |</span>
+<span class="add">+| `TCDebugInstance` (via `@commandersact/tccore-react-native`) | Native debug logging — see [Troubleshooting](#troubleshooting). |</span>
+<span class="add">+</span>
+<span class="add">+## Related Documentation</span>
+<span class="add">+</span>
+<span class="add">+| Document | When you need it |</span>
+<span class="add">+|---|---|</span>
+<span class="add">+| [`tccore-react-native`](https://www.npmjs.com/package/@commandersact/tccore-react-native) | `TCUserInstance` (user identification, consent forwarding) and `TCDebugInstance` (native debug logging) — required alongside this package. |</span>
+<span class="add">+| Native SDK documentation — [iOS](https://github.com/CommandersAct/iOSV5/tree/master/TCServerSide), [Android](https://github.com/CommandersAct/androidV5/tree/master/TCServerSide) | Full native behaviour this bridge wraps: exact payload structure, the Firebase destination, and background-mode internals. |</span>
+<span class="add">+| [Events Reference](https://doc.commandersact.com/developers/tracking/events-reference) | Full list of events and payloads, with code examples. |</span>
+<span class="add">+| [Mobile SDK Event Specificity](https://community.commandersact.com/platform-x/developers/tracking/about-events/mobile-sdk-event-specificity) | Mapping between event names, SDK class names, and payload content. |</span>
+<span class="add">+| [`tcconsent-react-native`](https://www.npmjs.com/package/@commandersact/tcconsent-react-native) | Managing user consent and its effect on this module — install alongside this package if you need it. |</span>
+<span class="add">+</span>
+<span class="add">+## Demo App</span>
+<span class="add">+</span>
+<span class="add">+A full working React Native app integrating this library: [TCDemoReactNative](https://github.com/CommandersAct/TCDemoReactNative)</span>
+<span class="add">+</span>
+<span class="add">+## Versions compatibility</span>
+<span class="add">+</span>
+<span class="add">+This package depends on `@commandersact/tccore-react-native` as a peer dependency, pinned to a specific version each release — npm will warn you of a mismatch. If you also use `@commandersact/tcconsent-react-native`, keep all three in sync:</span>
+<span class="add">+</span>
+<span class="add">+```sh</span>
+<span class="add">+npm install @commandersact/tccore-react-native@latest</span>
+<span class="add">+npm install @commandersact/tcserverside-react-native@latest</span>
+<span class="add">+npm install @commandersact/tcconsent-react-native@latest</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; Native iOS dependencies use fixed versions in the podspec to prevent unwanted auto-upgrades. Mixing versions across packages may cause linking failures.</span>
+<span class="add">+</span>
+<span class="add">+## Troubleshooting</span>
+<span class="add">+</span>
+<span class="add">+### Enabling native debug logs</span>
+<span class="add">+</span>
+<span class="add">+Without enabling logging first, the native SDKs print nothing — this is the first thing to check if you're not seeing what you expect. Enable it via `@commandersact/tccore-react-native`:</span>
+<span class="add">+</span>
+<span class="add">+```tsx</span>
+<span class="add">+import { TCDebugInstance } from '@commandersact/tccore-react-native';</span>
+<span class="add">+</span>
+<span class="add">+TCDebugInstance.enableNativeDebug();</span>
+<span class="add">+// TCDebugInstance.disableNativeDebug();</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+Then look for two log patterns to confirm an event actually reached our servers (filter Logcat by tag `CommandersAct` on Android):</span>
+<span class="add">+</span>
+<span class="add">+**Event queued** — recorded by the SDK, waiting on consent and/or connectivity:</span>
+<span class="add">+</span>
+<span class="add">+```</span>
+<span class="add">+CommandersAct: {"event_name":"purchase","id":"ID","revenue":1.1, ...}</span>
+<span class="add">+```</span>
+<span class="add">+</span>
+<span class="add">+**Event sent** — the SDK actually made the HTTP request:</span>
+<span class="add">+</span>
+<span class="add">+```</span>
+<span class="add">+CommandersAct: sending: https://collect.commander1.com/events?tc_s=...&amp;tc_skey=...</span>
+<span class="add">+CommandersAct: with POST data: {"event_name":"purchase", ...}</span>
+<span class="add">+```</span>
+<span class="ctx"> </span>
+<span class="del">-6- Remove the ios/Pods folder</span>
+<span class="add">+If you only ever see the first line, check your consent state and network connectivity. Neither log line logs the HTTP response code — use a network proxy (Charles, Wireshark) to confirm the server returned `200`.</span>
+<span class="ctx"> </span>
+<span class="del">-7- Ensure your Podfile is correctly configured—verify that required pods (e.g., pod "tccore-...") are properly declared</span>
+<span class="add">+&gt; [!NOTE]</span>
+<span class="add">+&gt; Hits are sampled server-side, so a missing hit in the platform doesn't necessarily mean it wasn't received. To bypass sampling while testing, add a `test_code` additional property to your event (ask your consultant for the value):</span>
+<span class="add">+&gt;</span>
+<span class="add">+&gt; ```ts</span>
+<span class="add">+&gt; event.addAdditionalProperty('test_code', 'your_test_code');</span>
+<span class="add">+&gt; ```</span>
+<span class="ctx"> </span>
+<span class="del">-8- Run pod install inside the ios/ directory</span>
+<span class="add">+### iOS build issues</span>
+<span class="ctx"> </span>
+<span class="add">+On iOS, library linking can be fragile and cached build artifacts may become corrupted. If you encounter dependency issues, `_OBJ_CLASS_$_` errors, or "not found" build failures, work through these steps in order:</span>
+<span class="ctx"> </span>
+<span class="del">-8.1- In some cases, you may also need to open Xcode, clean the build folder, and run the app from the .xcworkspace file.</span>
+<span class="add">+1. Delete your `node_modules` folder.</span>
+<span class="add">+2. Remove `package-lock.json`.</span>
+<span class="add">+3. Close Xcode if it's open.</span>
+<span class="add">+4. Run `npm install` to reinstall dependencies.</span>
+<span class="add">+5. Delete `ios/Podfile.lock`.</span>
+<span class="add">+6. Remove the `ios/Pods` folder.</span>
+<span class="add">+7. Run `pod install` inside the `ios/` directory.</span>
+<span class="add">+8. If the issue persists, open Xcode, clean the build folder (⌘⇧K), and run the app from the `.xcworkspace` file.</span>
+<span class="ctx"> </span>
+<span class="del">-# Support &amp; Contact : </span>
+<span class="add">+## Support &amp; Contact</span>
+<span class="ctx"> </span>
+<span class="del">-Support : support@commandersact.com</span>
+<span class="add">+Support: support@commandersact.com</span>
+<span class="ctx"> </span>
+<span class="ctx"> http://www.commandersact.com</span>
+<span class="ctx"> </span>
+<span class="del">-Commanders Act | 7b rue taylor - 75010 PARIS - France</span>
+<span class="add">+Commanders Act | 25 rue de Tolbiac - 75013 PARIS - France</span>
+<span class="ctx"> </span>
+<span class="del">-![Commanders Act logo](res/ca_logo.png)</span>
+<span class="meta">\ No newline at end of file</span>
+<span class="add">+![Commanders Act logo](res/ca_logo.png)</span></pre>
+    </div>
+  </section>
+
+  <section id="android-src-main-java-com-tcserverside-tcserversidemodule-java">
+    <div class="file-head">
+      <span class="file-num">02</span>
+      <h2>android/src/main/java/com/tcserverside/TcserversideModule.java</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -41,6 +41,7 @@ import com.tagcommander.lib.serverside.events.TCViewItemListEvent;</span>
+<span class="ctx"> import com.tagcommander.lib.serverside.events.base.TCEvent;</span>
+<span class="ctx"> import com.tagcommander.lib.serverside.schemas.TCApp;</span>
+<span class="ctx"> import com.tagcommander.lib.serverside.schemas.TCDevice;</span>
+<span class="add">+import com.tagcommander.lib.serverside.schemas.TCLifecycle;</span>
+<span class="ctx"> </span>
+<span class="ctx"> import org.json.JSONException;</span>
+<span class="ctx"> import org.json.JSONObject;</span>
+<span class="hunk">@@ -152,11 +153,15 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">   }</span>
+<span class="ctx"> </span>
+<span class="ctx">   @ReactMethod</span>
+<span class="del">-  public void removePermanentData(String key)</span>
+<span class="add">+  public void removePermanentData(String key, Callback callback)</span>
+<span class="ctx">   {</span>
+<span class="ctx">     if (tcServerSide != null)</span>
+<span class="ctx">     {</span>
+<span class="del">-      tcServerSide.removePermanentData(key);</span>
+<span class="add">+      callback.invoke(tcServerSide.removePermanentData(key));</span>
+<span class="add">+    }</span>
+<span class="add">+    else</span>
+<span class="add">+    {</span>
+<span class="add">+      callback.invoke((Object) null);</span>
+<span class="ctx">     }</span>
+<span class="ctx">   }</span>
+<span class="ctx"> </span>
+<span class="hunk">@@ -266,6 +271,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">       case "TCApp":</span>
+<span class="ctx">         obj = TCApp.getInstance();</span>
+<span class="ctx">         break;</span>
+<span class="add">+      case "TCLifecycle":</span>
+<span class="add">+        obj = TCLifecycle.getInstance();</span>
+<span class="add">+        break;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     if (obj != null &amp;&amp; key != null)</span>
+<span class="hunk">@@ -288,6 +296,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">         case "TCApp":</span>
+<span class="ctx">           obj = TCApp.getInstance();</span>
+<span class="ctx">           break;</span>
+<span class="add">+        case "TCLifecycle":</span>
+<span class="add">+          obj = TCLifecycle.getInstance();</span>
+<span class="add">+          break;</span>
+<span class="ctx">       }</span>
+<span class="ctx"> </span>
+<span class="ctx">       if (obj != null)</span>
+<span class="hunk">@@ -311,6 +322,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">         case "TCApp":</span>
+<span class="ctx">           obj = TCApp.getInstance();</span>
+<span class="ctx">           break;</span>
+<span class="add">+        case "TCLifecycle":</span>
+<span class="add">+          obj = TCLifecycle.getInstance();</span>
+<span class="add">+          break;</span>
+<span class="ctx">       }</span>
+<span class="ctx"> </span>
+<span class="ctx">       if (obj != null)</span>
+<span class="hunk">@@ -333,6 +347,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">       case "TCApp":</span>
+<span class="ctx">         obj = TCApp.getInstance();</span>
+<span class="ctx">         break;</span>
+<span class="add">+      case "TCLifecycle":</span>
+<span class="add">+        obj = TCLifecycle.getInstance();</span>
+<span class="add">+        break;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     if (obj != null)</span>
+<span class="hunk">@@ -355,6 +372,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">       case "TCApp":</span>
+<span class="ctx">         obj = TCApp.getInstance();</span>
+<span class="ctx">         break;</span>
+<span class="add">+      case "TCLifecycle":</span>
+<span class="add">+        obj = TCLifecycle.getInstance();</span>
+<span class="add">+        break;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     if (obj != null)</span>
+<span class="hunk">@@ -376,6 +396,9 @@ public class TcserversideModule extends ReactContextBaseJavaModule</span>
+<span class="ctx">       case "TCApp":</span>
+<span class="ctx">         obj = TCApp.getInstance();</span>
+<span class="ctx">         break;</span>
+<span class="add">+      case "TCLifecycle":</span>
+<span class="add">+        obj = TCLifecycle.getInstance();</span>
+<span class="add">+        break;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     if (obj != null )</span></pre>
+    </div>
+  </section>
+
+  <section id="ios-tceventparser-m">
+    <div class="file-head">
+      <span class="file-num">03</span>
+      <h2>ios/TCEventParser.m</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -38,7 +38,7 @@ - (id) parseEvent: (NSMutableDictionary *) eventDict withName: eventName</span>
+<span class="ctx">     {</span>
+<span class="ctx">         event = [self parseEcommerceEvent: eventDict withEvent: [[TCPurchaseEvent alloc] init]];</span>
+<span class="ctx">     }</span>
+<span class="del">-    else if ([eventName isEqualToString: @"add_payement_info"])</span>
+<span class="add">+    else if ([eventName isEqualToString: @"add_payment_info"])</span>
+<span class="ctx">     {</span>
+<span class="ctx">         event = [self parseEcommerceEvent: eventDict withEvent: [[TCAddPaymentInfoEvent alloc] init]];</span>
+<span class="ctx">     }</span></pre>
+    </div>
+  </section>
+
+  <section id="ios-tcserverside-swift">
+    <div class="file-head">
+      <span class="file-num">04</span>
+      <h2>ios/Tcserverside.swift</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -19,7 +19,7 @@ class Tcserverside: NSObject {</span>
+<span class="ctx"> </span>
+<span class="ctx">         callback([parseSchemes()])</span>
+<span class="ctx">     }</span>
+<span class="del">-    </span>
+<span class="add">+</span>
+<span class="ctx">     @objc(setStringValue:value:className:)</span>
+<span class="ctx">     func setStringValue(key: String, value: String, className: String) -&gt; Void</span>
+<span class="ctx">     {</span>
+<span class="hunk">@@ -69,6 +69,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().clearAdditionalProperties()</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().clearAdditionalProperties()</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     @objc(addAdvertisingID)</span>
+<span class="hunk">@@ -77,10 +81,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         tc?.addAdvertisingIDs()</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    @objc(removePermanentData:)</span>
+<span class="del">-    func removePermanentData(key: String) -&gt; Void</span>
+<span class="add">+    @objc(removePermanentData:callback:)</span>
+<span class="add">+    func removePermanentData(key: String, callback: RCTResponseSenderBlock) -&gt; Void</span>
+<span class="ctx">     {</span>
+<span class="del">-        tc?.removePermanentData(key)</span>
+<span class="add">+        callback([tc?.removePermanentData(key) as Any])</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     @objc(getPermanentData:callback:)</span>
+<span class="hunk">@@ -100,6 +104,12 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">     {</span>
+<span class="ctx">         tc?.enableRunningInBackground()</span>
+<span class="ctx">     }</span>
+<span class="add">+</span>
+<span class="add">+    @objc(waitForUserAgent)</span>
+<span class="add">+    func waitForUserAgent()</span>
+<span class="add">+    {</span>
+<span class="add">+        tc?.waitForUserAgent()</span>
+<span class="add">+    }</span>
+<span class="ctx">     </span>
+<span class="ctx">     @objc(addAdditionalProperty:value:className:)</span>
+<span class="ctx">     func addAdditionalProperty(key: String, value: String, className: String)</span>
+<span class="hunk">@@ -112,6 +122,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().addAdditionalProperty(key, withStringValue: value)</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().addAdditionalProperty(key, withStringValue: value)</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx">     </span>
+<span class="ctx">     @objc(addAdditionalPropertyWithMapValue:value:className:)</span>
+<span class="hunk">@@ -125,6 +139,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().addAdditionalProperty(key, withDictValue: value)</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().addAdditionalProperty(key, withDictValue: value)</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx">     </span>
+<span class="ctx">     @objc(addAdditionalPropertyWithBooleanValue:value:className:)</span>
+<span class="hunk">@@ -138,6 +156,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().addAdditionalProperty(key, withBoolValue: value)</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().addAdditionalProperty(key, withBoolValue: value)</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx">     </span>
+<span class="ctx">     @objc(addAdditionalPropertyWithNumberValue:value:className:)</span>
+<span class="hunk">@@ -151,6 +173,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().addAdditionalProperty(key, withNumberValue: NSDecimalNumber(value:value))</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().addAdditionalProperty(key, withNumberValue: NSDecimalNumber(value:value))</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx">     </span>
+<span class="ctx">     @objc(removeAdditionalProperty:className:)</span>
+<span class="hunk">@@ -164,6 +190,10 @@ class Tcserverside: NSObject {</span>
+<span class="ctx">         {</span>
+<span class="ctx">             TCApp.sharedInstance().removeAdditionalProperty(key)</span>
+<span class="ctx">         }</span>
+<span class="add">+        else if (className == "TCLifecycle")</span>
+<span class="add">+        {</span>
+<span class="add">+            TCLifecycle.sharedInstance().removeAdditionalProperty(key)</span>
+<span class="add">+        }</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     @objc(execute:eventJson:)</span></pre>
+    </div>
+  </section>
+
+  <section id="src-tcapp-tsx">
+    <div class="file-head">
+      <span class="file-num">05</span>
+      <h2>src/TCApp.tsx</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -10,6 +10,7 @@ export class TCApp</span>
+<span class="ctx">     private _nameSpace: string;</span>
+<span class="ctx">     private _coreVersion: string;</span>
+<span class="ctx">     private _serverSideVersion: string;</span>
+<span class="add">+    private _consentVersion: string;</span>
+<span class="ctx"> </span>
+<span class="ctx">     constructor() {}</span>
+<span class="ctx">     </span>
+<span class="hunk">@@ -55,7 +56,15 @@ export class TCApp</span>
+<span class="ctx">         }</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    public get name() </span>
+<span class="add">+    // Native recomputes this from the Consent module on every event if that module is present, overriding whatever is set here.</span>
+<span class="add">+    public set consentVersion(consentV: string) {</span>
+<span class="add">+        if (this._consentVersion !== consentV) {</span>
+<span class="add">+            this._consentVersion = consentV;</span>
+<span class="add">+            TCServerSideBridge.setStringValue("consentVersion", consentV, TCApp.name);</span>
+<span class="add">+        }</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    public get name()</span>
+<span class="ctx">     {</span>
+<span class="ctx">         return this._name;</span>
+<span class="ctx">     }</span>
+<span class="hunk">@@ -80,12 +89,17 @@ export class TCApp</span>
+<span class="ctx">         return this._coreVersion;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    public get serverSideVersion() </span>
+<span class="add">+    public get serverSideVersion()</span>
+<span class="ctx">     {</span>
+<span class="ctx">         return this._serverSideVersion;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    initValues(properties: any) </span>
+<span class="add">+    public get consentVersion()</span>
+<span class="add">+    {</span>
+<span class="add">+        return this._consentVersion;</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    initValues(properties: any)</span>
+<span class="ctx">     {</span>
+<span class="ctx">         this._name = properties["name"] as string;</span>
+<span class="ctx">         this._version = properties["version"] as string;</span>
+<span class="hunk">@@ -93,6 +107,7 @@ export class TCApp</span>
+<span class="ctx">         this._nameSpace = properties["namespace"] as string;</span>
+<span class="ctx">         this._coreVersion = properties["core_version"] as string;</span>
+<span class="ctx">         this._serverSideVersion = properties["serverside_version"] as string;</span>
+<span class="add">+        this._consentVersion = properties["consent_version"] as string;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     addAdditionalProperty(key: string, value: string)</span></pre>
+    </div>
+  </section>
+
+  <section id="src-tcdevice-tsx">
+    <div class="file-head">
+      <span class="file-num">06</span>
+      <h2>src/TCDevice.tsx</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -14,7 +14,9 @@ export class TCDevice</span>
+<span class="ctx">     private _osVersion: string;</span>
+<span class="ctx">     private _screenWidth: number;</span>
+<span class="ctx">     private _screenHeight: number;</span>
+<span class="del">-    </span>
+<span class="add">+    private _language: string;</span>
+<span class="add">+    private _region: string;</span>
+<span class="add">+</span>
+<span class="ctx">     constructor() { }</span>
+<span class="ctx"> </span>
+<span class="ctx">     public set sdkID(mID: string) {</span>
+<span class="hunk">@@ -86,8 +88,22 @@ export class TCDevice</span>
+<span class="ctx">             TCServerSideBridge.setNumValue("screenHeight", height, TCDevice.name);</span>
+<span class="ctx">         }</span>
+<span class="ctx">     }</span>
+<span class="del">-    </span>
+<span class="del">-    public get sdkID() </span>
+<span class="add">+</span>
+<span class="add">+    public set language(aLanguage: string) {</span>
+<span class="add">+        if (this._language !== aLanguage) {</span>
+<span class="add">+            this._language = aLanguage;</span>
+<span class="add">+            TCServerSideBridge.setStringValue("language", aLanguage, TCDevice.name);</span>
+<span class="add">+        }</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    public set region(aRegion: string) {</span>
+<span class="add">+        if (this._region !== aRegion) {</span>
+<span class="add">+            this._region = aRegion;</span>
+<span class="add">+            TCServerSideBridge.setStringValue("region", aRegion, TCDevice.name);</span>
+<span class="add">+        }</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    public get sdkID()</span>
+<span class="ctx">     {</span>
+<span class="ctx">         return this._sdkID;</span>
+<span class="ctx">     }</span>
+<span class="hunk">@@ -132,12 +148,22 @@ export class TCDevice</span>
+<span class="ctx">         return this._screenWidth;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    public get screenHeight() </span>
+<span class="add">+    public get screenHeight()</span>
+<span class="ctx">     {</span>
+<span class="ctx">         return this._screenHeight;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="del">-    initValues(properties: any) </span>
+<span class="add">+    public get language()</span>
+<span class="add">+    {</span>
+<span class="add">+        return this._language;</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    public get region()</span>
+<span class="add">+    {</span>
+<span class="add">+        return this._region;</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    initValues(properties: any)</span>
+<span class="ctx">     {</span>
+<span class="ctx">         this.sdkID = properties["sdk_id"] as string;</span>
+<span class="ctx">         this._manufacturer = properties["manufacturer"] as string;</span>
+<span class="hunk">@@ -149,6 +175,8 @@ export class TCDevice</span>
+<span class="ctx">         this._osVersion = properties["osVersion"] as string;</span>
+<span class="ctx">         this._screenWidth = properties["screenWidth"] as number;</span>
+<span class="ctx">         this._screenHeight = properties["screenHeight"] as number;</span>
+<span class="add">+        this._language = properties["language"] as string;</span>
+<span class="add">+        this._region = properties["region"] as string;</span>
+<span class="ctx">     }</span>
+<span class="ctx"> </span>
+<span class="ctx">     addAdditionalProperty(key: string, value: string)</span></pre>
+    </div>
+  </section>
+
+  <section id="src-tclifecycle-tsx">
+    <div class="file-head">
+      <span class="file-num">07</span>
+      <h2>src/TCLifecycle.tsx</h2>
+      <span class="badge new">NEW</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -0,0 +1,52 @@</span>
+<span class="add">+import { TCServerSideBridge } from "./TCServerSideBridge";</span>
+<span class="add">+</span>
+<span class="add">+// TCLifecycle has no directly settable fields natively — every value in the</span>
+<span class="add">+// context.device.lifecycle payload section (session/visit counters, foreground</span>
+<span class="add">+// time, ...) is computed internally. Only additionalProperty injection is exposed.</span>
+<span class="add">+export class TCLifecycle</span>
+<span class="add">+{</span>
+<span class="add">+    private additionalProperties = new Map();</span>
+<span class="add">+</span>
+<span class="add">+    constructor() {}</span>
+<span class="add">+</span>
+<span class="add">+    addAdditionalProperty(key: string, value: string)</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.set(key, value);</span>
+<span class="add">+        TCServerSideBridge.addAdditionalProperty(key, value, TCLifecycle.name);</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    addAdditionalPropertyWithMapValue(key: string, value: Object)</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.set(key, value);</span>
+<span class="add">+        TCServerSideBridge.addAdditionalPropertyWithMapValue(key, value, TCLifecycle.name);</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    addAdditionalPropertyWithBooleanValue(key: string, value: boolean)</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.set(key, value);</span>
+<span class="add">+        TCServerSideBridge.addAdditionalPropertyWithBooleanValue(key, value, TCLifecycle.name);</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    addAdditionalPropertyWithNumberValue(key: string, value: number)</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.set(key, value);</span>
+<span class="add">+        TCServerSideBridge.addAdditionalPropertyWithNumberValue(key, value, TCLifecycle.name);</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    getAdditionalProperties(): Map&lt;string, any&gt;</span>
+<span class="add">+    {</span>
+<span class="add">+      return this.additionalProperties;</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    removeAdditionalProperty(key: string)</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.delete(key);</span>
+<span class="add">+        TCServerSideBridge.removeAdditionalProperty(key, TCLifecycle.name);</span>
+<span class="add">+    }</span>
+<span class="add">+</span>
+<span class="add">+    clearAdditionalProperties()</span>
+<span class="add">+    {</span>
+<span class="add">+        this.additionalProperties.clear();</span>
+<span class="add">+        TCServerSideBridge.clearAdditionalProperties(TCLifecycle.name)</span>
+<span class="add">+    }</span>
+<span class="add">+}</span></pre>
+    </div>
+  </section>
+
+  <section id="src-tcserverside-tsx">
+    <div class="file-head">
+      <span class="file-num">08</span>
+      <h2>src/TCServerSide.tsx</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -3,21 +3,26 @@ import { TCEvent } from './events/TCEvent'</span>
+<span class="ctx"> import { TCUserInstance } from '@commandersact/tccore-react-native'; </span>
+<span class="ctx"> import { TCDevice } from './TCDevice';</span>
+<span class="ctx"> import { TCApp } from './TCApp';</span>
+<span class="add">+import { TCLifecycle } from './TCLifecycle';</span>
+<span class="ctx"> import { TCServerSideBridge } from './TCServerSideBridge';</span>
+<span class="ctx"> </span>
+<span class="ctx"> export const TCDeviceInstance = new TCDevice();</span>
+<span class="ctx"> export const TCAppInstance = new TCApp();</span>
+<span class="add">+export const TCLifecycleInstance = new TCLifecycle();</span>
+<span class="ctx"> </span>
+<span class="del">-export async function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR)</span>
+<span class="add">+export function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR): Promise&lt;void&gt;</span>
+<span class="ctx"> {</span>
+<span class="del">-    if (Platform.OS === 'ios')</span>
+<span class="del">-    {</span>
+<span class="del">-        await TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, onInitializedIOS);</span>
+<span class="del">-    }</span>
+<span class="del">-    else if (Platform.OS === 'android')</span>
+<span class="add">+    return new Promise((resolve) =&gt;</span>
+<span class="ctx">     {</span>
+<span class="del">-        await TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, onInitializedAndroid);</span>
+<span class="del">-    }</span>
+<span class="add">+        if (Platform.OS === 'ios')</span>
+<span class="add">+        {</span>
+<span class="add">+            TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, (schemes: any) =&gt; { onInitializedIOS(schemes); resolve(); });</span>
+<span class="add">+        }</span>
+<span class="add">+        else if (Platform.OS === 'android')</span>
+<span class="add">+        {</span>
+<span class="add">+            TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, (schemes: string) =&gt; { onInitializedAndroid(schemes); resolve(); });</span>
+<span class="add">+        }</span>
+<span class="add">+    });</span>
+<span class="ctx"> }</span>
+<span class="ctx"> </span>
+<span class="ctx"> export function execute(event: TCEvent)</span>
+<span class="hunk">@@ -40,9 +45,12 @@ export function addAdvertisingID()</span>
+<span class="ctx">     TCServerSideBridge.addAdvertisingID();</span>
+<span class="ctx"> }</span>
+<span class="ctx"> </span>
+<span class="del">-export function getPermanentData(): string</span>
+<span class="add">+export function getPermanentData(key: string): Promise&lt;string&gt;</span>
+<span class="ctx"> {</span>
+<span class="del">-    return TCServerSideBridge.getPermanentData();</span>
+<span class="add">+    return new Promise((resolve) =&gt;</span>
+<span class="add">+    {</span>
+<span class="add">+        TCServerSideBridge.getPermanentData(key, (value: string) =&gt; resolve(value));</span>
+<span class="add">+    });</span>
+<span class="ctx"> }</span>
+<span class="ctx"> </span>
+<span class="ctx"> export function addPermanentData(key: string, value: string)</span>
+<span class="hunk">@@ -50,11 +58,28 @@ export function addPermanentData(key: string, value: string)</span>
+<span class="ctx">     TCServerSideBridge.addPermanentData(key, value);</span>
+<span class="ctx"> }</span>
+<span class="ctx"> </span>
+<span class="add">+export function removePermanentData(key: string): Promise&lt;string&gt;</span>
+<span class="add">+{</span>
+<span class="add">+    return new Promise((resolve) =&gt;</span>
+<span class="add">+    {</span>
+<span class="add">+        TCServerSideBridge.removePermanentData(key, (value: string) =&gt; resolve(value));</span>
+<span class="add">+    });</span>
+<span class="add">+}</span>
+<span class="add">+</span>
+<span class="ctx"> export function enableRunningInBackground()</span>
+<span class="ctx"> {</span>
+<span class="ctx">     TCServerSideBridge.enableRunningInBackground();</span>
+<span class="ctx"> }</span>
+<span class="ctx"> </span>
+<span class="add">+// iOS only — Android reads the user-agent synchronously and has no equivalent call.</span>
+<span class="add">+export function waitForUserAgent()</span>
+<span class="add">+{</span>
+<span class="add">+    if (Platform.OS === 'ios')</span>
+<span class="add">+    {</span>
+<span class="add">+        TCServerSideBridge.waitForUserAgent();</span>
+<span class="add">+    }</span>
+<span class="add">+}</span>
+<span class="add">+</span>
+<span class="ctx"> export function useLegacyUniqueIDForAnonymousID()</span>
+<span class="ctx"> {</span>
+<span class="ctx">     TCServerSideBridge.useLegacyUniqueIDForAnonymousID(setAnonymousID);</span></pre>
+    </div>
+  </section>
+
+  <section id="src-index-tsx">
+    <div class="file-head">
+      <span class="file-num">09</span>
+      <h2>src/index.tsx</h2>
+      <span class="badge mod">MODIFIED</span>
+    </div>
+    <div class="diff-wrap">
+      <pre class="diff"><span class="hunk">@@ -1,5 +1,6 @@</span>
+<span class="ctx"> export { TCDevice } from './TCDevice';</span>
+<span class="ctx"> export { TCApp } from './TCApp';</span>
+<span class="add">+export { TCLifecycle } from './TCLifecycle';</span>
+<span class="ctx"> export { TCEvent } from './events/TCEvent'</span>
+<span class="ctx"> export { TCECommerceEvent } from './events/TCECommerceEvent'</span>
+<span class="ctx"> export { TCAdditionalProperties } from './events/TCAdditionalProperties'</span></pre>
+    </div>
+  </section>
+    <footer>tcserverside-react-native · full change log · generated 2026-08-07</footer>
+  </main>
+</div>
+</body>
+</html>

@@ -14,7 +14,9 @@ export class TCDevice
     private _osVersion: string;
     private _screenWidth: number;
     private _screenHeight: number;
-    
+    private _language: string;
+    private _region: string;
+
     constructor() { }
 
     public set sdkID(mID: string) {
@@ -86,8 +88,22 @@ export class TCDevice
             TCServerSideBridge.setNumValue("screenHeight", height, TCDevice.name);
         }
     }
-    
-    public get sdkID() 
+
+    public set language(aLanguage: string) {
+        if (this._language !== aLanguage) {
+            this._language = aLanguage;
+            TCServerSideBridge.setStringValue("language", aLanguage, TCDevice.name);
+        }
+    }
+
+    public set region(aRegion: string) {
+        if (this._region !== aRegion) {
+            this._region = aRegion;
+            TCServerSideBridge.setStringValue("region", aRegion, TCDevice.name);
+        }
+    }
+
+    public get sdkID()
     {
         return this._sdkID;
     }
@@ -132,12 +148,22 @@ export class TCDevice
         return this._screenWidth;
     }
 
-    public get screenHeight() 
+    public get screenHeight()
     {
         return this._screenHeight;
     }
 
-    initValues(properties: any) 
+    public get language()
+    {
+        return this._language;
+    }
+
+    public get region()
+    {
+        return this._region;
+    }
+
+    initValues(properties: any)
     {
         this.sdkID = properties["sdk_id"] as string;
         this._manufacturer = properties["manufacturer"] as string;
@@ -149,6 +175,8 @@ export class TCDevice
         this._osVersion = properties["osVersion"] as string;
         this._screenWidth = properties["screenWidth"] as number;
         this._screenHeight = properties["screenHeight"] as number;
+        this._language = properties["language"] as string;
+        this._region = properties["region"] as string;
     }
 
     addAdditionalProperty(key: string, value: string)

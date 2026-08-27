@@ -10,6 +10,7 @@ export class TCApp
     private _nameSpace: string;
     private _coreVersion: string;
     private _serverSideVersion: string;
+    private _consentVersion: string;
 
     constructor() {}
     
@@ -55,7 +56,15 @@ export class TCApp
         }
     }
 
-    public get name() 
+    // Native recomputes this from the Consent module on every event if that module is present, overriding whatever is set here.
+    public set consentVersion(consentV: string) {
+        if (this._consentVersion !== consentV) {
+            this._consentVersion = consentV;
+            TCServerSideBridge.setStringValue("consentVersion", consentV, TCApp.name);
+        }
+    }
+
+    public get name()
     {
         return this._name;
     }
@@ -80,12 +89,17 @@ export class TCApp
         return this._coreVersion;
     }
 
-    public get serverSideVersion() 
+    public get serverSideVersion()
     {
         return this._serverSideVersion;
     }
 
-    initValues(properties: any) 
+    public get consentVersion()
+    {
+        return this._consentVersion;
+    }
+
+    initValues(properties: any)
     {
         this._name = properties["name"] as string;
         this._version = properties["version"] as string;
@@ -93,6 +107,7 @@ export class TCApp
         this._nameSpace = properties["namespace"] as string;
         this._coreVersion = properties["core_version"] as string;
         this._serverSideVersion = properties["serverside_version"] as string;
+        this._consentVersion = properties["consent_version"] as string;
     }
 
     addAdditionalProperty(key: string, value: string)

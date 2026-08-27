@@ -8,16 +8,19 @@ import { TCServerSideBridge } from './TCServerSideBridge';
 export const TCDeviceInstance = new TCDevice();
 export const TCAppInstance = new TCApp();
 
-export async function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR)
+export function initServerSide(siteId: number, sourceKey: string, defaultBehaviour: ETCConsentBehaviour = ETCConsentBehaviour.PB_DEFAULT_BEHAVIOUR): Promise<void>
 {
-    if (Platform.OS === 'ios')
+    return new Promise((resolve) =>
     {
-        await TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, onInitializedIOS);
-    }
-    else if (Platform.OS === 'android')
-    {
-        await TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, onInitializedAndroid);
-    }
+        if (Platform.OS === 'ios')
+        {
+            TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, (schemes: any) => { onInitializedIOS(schemes); resolve(); });
+        }
+        else if (Platform.OS === 'android')
+        {
+            TCServerSideBridge.initServerSide(siteId, sourceKey, defaultBehaviour, (schemes: string) => { onInitializedAndroid(schemes); resolve(); });
+        }
+    });
 }
 
 export function execute(event: TCEvent)
@@ -40,9 +43,12 @@ export function addAdvertisingID()
     TCServerSideBridge.addAdvertisingID();
 }
 
-export function getPermanentData(): string
+export function getPermanentData(key: string): Promise<string>
 {
-    return TCServerSideBridge.getPermanentData();
+    return new Promise((resolve) =>
+    {
+        TCServerSideBridge.getPermanentData(key, (value: string) => resolve(value));
+    });
 }
 
 export function addPermanentData(key: string, value: string)
@@ -50,9 +56,26 @@ export function addPermanentData(key: string, value: string)
     TCServerSideBridge.addPermanentData(key, value);
 }
 
+export function removePermanentData(key: string): Promise<string>
+{
+    return new Promise((resolve) =>
+    {
+        TCServerSideBridge.removePermanentData(key, (value: string) => resolve(value));
+    });
+}
+
 export function enableRunningInBackground()
 {
     TCServerSideBridge.enableRunningInBackground();
+}
+
+// iOS only — Android reads the user-agent synchronously and has no equivalent call.
+export function waitForUserAgent()
+{
+    if (Platform.OS === 'ios')
+    {
+        TCServerSideBridge.waitForUserAgent();
+    }
 }
 
 export function useLegacyUniqueIDForAnonymousID()

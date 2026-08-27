@@ -11,7 +11,6 @@ class Tcserverside: NSObject {
     @objc(initServerSide:sourceKey:defaultBehaviour:callback:)
     func initServerSide(siteId: Double, sourceKey: String, defaultBehaviour: String, callback: RCTResponseSenderBlock) -> Void
     {
-        TCDebug.setDebugLevel(TCLogLevel_Info)
         eventParser = TCEventParser()
         tc = ServerSide(siteID: Int32(siteId), andSourceKey: sourceKey, andDefaultBehaviour: evaluateBehaviour(stringBehaviour: defaultBehaviour))
         TCApp.sharedInstance().addAdditionalProperty("bridge", withStringValue: "react-native")
@@ -19,7 +18,7 @@ class Tcserverside: NSObject {
 
         callback([parseSchemes()])
     }
-    
+
     @objc(setStringValue:value:className:)
     func setStringValue(key: String, value: String, className: String) -> Void
     {
@@ -77,10 +76,10 @@ class Tcserverside: NSObject {
         tc?.addAdvertisingIDs()
     }
 
-    @objc(removePermanentData:)
-    func removePermanentData(key: String) -> Void
+    @objc(removePermanentData:callback:)
+    func removePermanentData(key: String, callback: RCTResponseSenderBlock) -> Void
     {
-        tc?.removePermanentData(key)
+        callback([tc?.removePermanentData(key) as Any])
     }
 
     @objc(getPermanentData:callback:)
@@ -99,6 +98,12 @@ class Tcserverside: NSObject {
     func enableRunningInBackground()
     {
         tc?.enableRunningInBackground()
+    }
+
+    @objc(waitForUserAgent)
+    func waitForUserAgent()
+    {
+        tc?.waitForUserAgent()
     }
     
     @objc(addAdditionalProperty:value:className:)

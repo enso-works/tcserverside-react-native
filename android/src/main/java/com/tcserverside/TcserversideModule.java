@@ -70,7 +70,6 @@ public class TcserversideModule extends ReactContextBaseJavaModule
   @ReactMethod
   public void initServerSide(int siteId, String sourceKey, String defaultBehaviour, Callback callBack)
   {
-    TCDebug.setDebugLevel(Log.VERBOSE);
     tcServerSide = new TCServerSide(siteId, sourceKey, getReactApplicationContext().getApplicationContext(), evaluateBehaviour(defaultBehaviour));
     TCApp.getInstance().addAdditionalProperty("bridge", "react-native");
     TCApp.getInstance().addAdditionalProperty("tcserverside_react_native_plugin_version", TCServerSideReactNativeGenerated.version);
@@ -152,11 +151,15 @@ public class TcserversideModule extends ReactContextBaseJavaModule
   }
 
   @ReactMethod
-  public void removePermanentData(String key)
+  public void removePermanentData(String key, Callback callback)
   {
     if (tcServerSide != null)
     {
-      tcServerSide.removePermanentData(key);
+      callback.invoke(tcServerSide.removePermanentData(key));
+    }
+    else
+    {
+      callback.invoke((Object) null);
     }
   }
 
